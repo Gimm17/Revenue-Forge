@@ -5,9 +5,11 @@ use App\Http\Controllers\App\AffiliateLinkStoreController;
 use App\Http\Controllers\App\AffiliateShowController;
 use App\Http\Controllers\App\AnalyticsController;
 use App\Http\Controllers\App\BillingController;
+use App\Http\Controllers\App\BroadcastController;
 use App\Http\Controllers\App\CouponController;
 use App\Http\Controllers\App\CustomerExportController;
 use App\Http\Controllers\App\NotificationController;
+use App\Http\Controllers\App\TestimonialController;
 use App\Http\Controllers\App\CustomerIndexController;
 use App\Http\Controllers\App\CustomerShowController;
 use App\Http\Controllers\App\SendCustomerPortalLinkController;
@@ -112,6 +114,17 @@ Route::middleware(['auth', 'verified', 'resolve.workspace'])
 
         // Customer Export
         Route::get('/customers/export', CustomerExportController::class)->name('customers.export');
+
+        // Broadcasts
+        Route::get('/broadcasts', [BroadcastController::class, 'index'])->name('broadcasts.index');
+        Route::post('/broadcasts', [BroadcastController::class, 'store'])->name('broadcasts.store');
+        Route::delete('/broadcasts/{broadcast}', [BroadcastController::class, 'destroy'])->name('broadcasts.destroy');
+
+        // Testimonials
+        Route::get('/testimonials', [TestimonialController::class, 'index'])->name('testimonials.index');
+        Route::post('/testimonials', [TestimonialController::class, 'store'])->name('testimonials.store');
+        Route::delete('/testimonials/{testimonial}', [TestimonialController::class, 'destroy'])->name('testimonials.destroy');
+        Route::post('/testimonials/{testimonial}/toggle', [TestimonialController::class, 'toggleFeatured'])->name('testimonials.toggle');
 
         // Settings
         Route::get('/settings', [WorkspaceSettingsController::class, 'edit'])->name('settings.edit');

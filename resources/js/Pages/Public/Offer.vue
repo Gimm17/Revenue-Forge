@@ -9,6 +9,7 @@ const props = defineProps({
     offer: Object,
     workspace: Object,
     sections: { type: Array, default: () => [] },
+    testimonials: { type: Array, default: () => [] },
 });
 
 const showCheckout = ref(false);
@@ -247,6 +248,41 @@ const sortedSections = computed(() =>
                 </div>
             </Teleport>
         </div>
+
+        <!-- Testimonials Section -->
+        <section
+            v-if="testimonials && testimonials.length > 0"
+            class="max-w-4xl mx-auto px-6 py-12"
+        >
+            <h2
+                class="text-2xl font-bold text-center mb-8"
+                :style="{ color: workspace.brand_color }"
+            >
+                What Our Customers Say
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div
+                    v-for="(t, i) in testimonials"
+                    :key="i"
+                    class="bg-white rounded-xl p-5 shadow-sm border border-gray-100"
+                >
+                    <div class="text-sm mb-2">{{ "⭐".repeat(t.rating) }}</div>
+                    <p
+                        class="text-gray-700 text-sm italic leading-relaxed mb-3"
+                    >
+                        "{{ t.content }}"
+                    </p>
+                    <div>
+                        <p class="text-sm font-semibold text-gray-900">
+                            {{ t.name }}
+                        </p>
+                        <p v-if="t.role" class="text-xs text-gray-500">
+                            {{ t.role }}
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
 
         <!-- Chat Widget -->
         <ChatWidget

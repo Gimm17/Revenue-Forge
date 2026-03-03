@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\DailyMetric;
 use App\Models\Offer;
 use App\Models\OfferPageView;
+use App\Models\Testimonial;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -55,6 +56,12 @@ class PublicOfferController extends Controller
                 'chat_email' => $offer->workspace->chat_email,
             ],
             'sections' => $sections,
+            'testimonials' => Testimonial::where('workspace_id', $offer->workspace_id)
+                ->where(fn ($q) => $q->whereNull('offer_id')->orWhere('offer_id', $offer->id))
+                ->where('is_featured', true)
+                ->orderBy('sort_order')
+                ->limit(6)
+                ->get(['name', 'role', 'content', 'rating']),
         ]);
     }
 
