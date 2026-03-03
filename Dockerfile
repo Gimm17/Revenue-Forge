@@ -28,8 +28,11 @@ RUN npm run build
 # Run composer scripts now that application code is present (e.g., post-autoload-dump)
 RUN composer run-script post-autoload-dump
 
-# Optimize Laravel (Use dummy DB_CONNECTION to prevent SQLite missing database error during build)
-ENV DB_CONNECTION=mysql
+# Optimize Laravel (Use dummy env vars to prevent missing database error during build)
+ENV DB_CONNECTION=sqlite
+ENV DB_DATABASE=:memory:
+ENV CACHE_STORE=file
+ENV SESSION_DRIVER=file
 RUN php artisan optimize:clear \
     && php artisan config:cache \
     && php artisan route:cache \
