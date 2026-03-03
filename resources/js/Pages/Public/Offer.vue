@@ -1,9 +1,14 @@
 <script setup>
 import PublicLayout from "@/Layouts/PublicLayout.vue";
 import { Head, useForm } from "@inertiajs/vue3";
-import { ref } from "vue";
+import { ref, computed } from "vue";
+import SectionRenderer from "@/Components/LandingBuilder/SectionRenderer.vue";
 
-const props = defineProps({ offer: Object, workspace: Object });
+const props = defineProps({
+    offer: Object,
+    workspace: Object,
+    sections: { type: Array, default: () => [] },
+});
 
 const showCheckout = ref(false);
 const form = useForm({ name: "", email: "", phone: "" });
@@ -18,166 +23,110 @@ const formatCurrency = (amount) =>
         currency: props.offer.currency || "IDR",
         minimumFractionDigits: 0,
     }).format(amount || 0);
+
+// Sort sections by order
+const sortedSections = computed(() =>
+    [...props.sections].sort((a, b) => a.order - b.order),
+);
 </script>
 
 <template>
     <Head :title="offer.title" />
     <PublicLayout>
         <div class="min-h-screen">
-            <!-- Hero -->
-            <section class="relative py-20 md:py-28 overflow-hidden">
-                <div
-                    class="absolute inset-0 bg-gradient-to-br from-cyan-500/5 to-violet-500/5"
+            <!-- Dynamic Sections from Builder -->
+            <template v-if="sections.length">
+                <SectionRenderer
+                    v-for="section in sortedSections"
+                    :key="section.id"
+                    :section="section"
+                    :offer="offer"
+                    @checkout="showCheckout = true"
                 />
-                <div class="relative max-w-4xl mx-auto px-6 text-center">
-                    <span
-                        class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium border border-cyan-500/30 text-cyan-400 bg-cyan-500/10 mb-6"
-                    >
-                        {{ offer.type_label }}
-                    </span>
-                    <h1
-                        class="text-3xl md:text-5xl font-bold text-white mb-4 leading-tight"
-                    >
-                        {{ offer.title }}
-                    </h1>
-                    <p
-                        v-if="offer.tagline"
-                        class="text-lg md:text-xl text-gray-400 mb-8"
-                    >
-                        {{ offer.tagline }}
-                    </p>
+            </template>
 
-                    <div class="flex items-center justify-center gap-4 mb-8">
+            <!-- Fallback: Original hardcoded layout -->
+            <template v-else>
+                <!-- Hero -->
+                <section class="relative py-20 md:py-28 overflow-hidden">
+                    <div
+                        class="absolute inset-0 bg-gradient-to-br from-cyan-500/5 to-violet-500/5"
+                    />
+                    <div class="relative max-w-4xl mx-auto px-6 text-center">
                         <span
-                            class="text-4xl md:text-5xl font-bold text-white"
-                            >{{ formatCurrency(offer.price) }}</span
+                            class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium border border-cyan-500/30 text-cyan-400 bg-cyan-500/10 mb-6"
                         >
-                        <span
-                            v-if="offer.interval"
-                            class="text-sm text-gray-500"
-                            >/
-                            {{
-                                offer.interval === "monthly" ? "bulan" : "tahun"
-                            }}</span
+                            {{ offer.type_label }}
+                        </span>
+                        <h1
+                            class="text-3xl md:text-5xl font-bold text-white mb-4 leading-tight"
                         >
-                        <span
-                            v-if="offer.credit_amount"
-                            class="text-sm text-gray-500"
-                            >({{ offer.credit_amount }} credits)</span
+                            {{ offer.title }}
+                        </h1>
+                        <p
+                            v-if="offer.tagline"
+                            class="text-lg md:text-xl text-gray-400 mb-8"
                         >
+                            {{ offer.tagline }}
+                        </p>
+                        <div
+                            class="flex items-center justify-center gap-4 mb-8"
+                        >
+                            <span
+                                class="text-4xl md:text-5xl font-bold text-white"
+                                >{{ formatCurrency(offer.price) }}</span
+                            >
+                        </div>
+                        <button
+                            @click="showCheckout = true"
+                            class="inline-flex items-center gap-2 px-8 py-4 text-lg font-bold text-white bg-gradient-to-r from-cyan-500 to-violet-600 rounded-xl hover:from-cyan-400 hover:to-violet-500 transition-all shadow-xl shadow-cyan-500/25 hover:shadow-cyan-500/40 hover:scale-[1.02]"
+                        >
+                            {{ offer.cta_text || "Buy Now" }}
+                        </button>
                     </div>
+                </section>
 
-                    <button
-                        @click="showCheckout = true"
-                        class="inline-flex items-center gap-2 px-8 py-4 text-lg font-bold text-white bg-gradient-to-r from-cyan-500 to-violet-600 rounded-xl hover:from-cyan-400 hover:to-violet-500 transition-all shadow-xl shadow-cyan-500/25 hover:shadow-cyan-500/40 hover:scale-[1.02]"
-                    >
-                        {{ offer.cta_text || "Buy Now" }}
-                        <svg
-                            class="w-5 h-5"
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                        >
-                            <path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                stroke-width="2"
-                                d="M17 8l4 4m0 0l-4 4m4-4H3"
-                            />
-                        </svg>
-                    </button>
-                </div>
-            </section>
-
-            <!-- Content -->
-            <section class="max-w-4xl mx-auto px-6 pb-20 space-y-12">
-                <!-- Pitch -->
-                <div
+                <!-- Short Pitch -->
+                <section
                     v-if="offer.short_pitch"
-                    class="max-w-2xl mx-auto text-center"
+                    class="max-w-2xl mx-auto px-6 py-12 text-center"
                 >
                     <p class="text-lg text-gray-300 leading-relaxed">
                         {{ offer.short_pitch }}
                     </p>
-                </div>
+                </section>
 
                 <!-- Benefits -->
-                <div
+                <section
                     v-if="offer.benefits?.length"
-                    class="grid grid-cols-1 md:grid-cols-2 gap-4"
+                    class="max-w-4xl mx-auto px-6 py-12"
                 >
-                    <div
-                        v-for="(b, i) in offer.benefits"
-                        :key="i"
-                        class="flex items-start gap-3 p-4 rounded-xl bg-white/[0.04] border border-white/[0.08]"
-                    >
-                        <svg
-                            class="w-5 h-5 text-cyan-400 mt-0.5 shrink-0"
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                        >
-                            <path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                stroke-width="2"
-                                d="M5 13l4 4L19 7"
-                            />
-                        </svg>
-                        <span class="text-gray-200 text-sm">{{ b }}</span>
-                    </div>
-                </div>
-
-                <!-- Long Copy -->
-                <div
-                    v-if="offer.long_copy"
-                    class="prose prose-invert max-w-2xl mx-auto"
-                >
-                    <div
-                        class="text-gray-300 whitespace-pre-line leading-relaxed"
-                    >
-                        {{ offer.long_copy }}
-                    </div>
-                </div>
-
-                <!-- FAQ -->
-                <div v-if="offer.faq?.length">
-                    <h2 class="text-xl font-bold text-white mb-6 text-center">
-                        Frequently Asked Questions
-                    </h2>
-                    <div class="max-w-2xl mx-auto space-y-3">
-                        <details
-                            v-for="(f, i) in offer.faq"
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div
+                            v-for="(b, i) in offer.benefits"
                             :key="i"
-                            class="group rounded-xl bg-white/[0.04] border border-white/[0.08]"
+                            class="flex items-start gap-3 p-4 rounded-xl bg-white/[0.04] border border-white/[0.08]"
                         >
-                            <summary
-                                class="cursor-pointer px-5 py-4 text-sm font-medium text-white flex items-center justify-between"
+                            <svg
+                                class="w-5 h-5 text-cyan-400 mt-0.5 shrink-0"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
                             >
-                                {{ f.question }}
-                                <svg
-                                    class="w-4 h-4 text-gray-500 group-open:rotate-180 transition-transform"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    viewBox="0 0 24 24"
-                                >
-                                    <path
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        stroke-width="2"
-                                        d="M19 9l-7 7-7-7"
-                                    />
-                                </svg>
-                            </summary>
-                            <div class="px-5 pb-4 text-sm text-gray-400">
-                                {{ f.answer }}
-                            </div>
-                        </details>
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M5 13l4 4L19 7"
+                                />
+                            </svg>
+                            <span class="text-gray-200 text-sm">{{ b }}</span>
+                        </div>
                     </div>
-                </div>
+                </section>
 
                 <!-- Bottom CTA -->
-                <div class="text-center py-8">
+                <section class="text-center py-8 pb-20">
                     <button
                         @click="showCheckout = true"
                         class="inline-flex items-center gap-2 px-8 py-4 text-lg font-bold text-white bg-gradient-to-r from-cyan-500 to-violet-600 rounded-xl hover:from-cyan-400 hover:to-violet-500 transition-all shadow-xl shadow-cyan-500/25"
@@ -185,8 +134,8 @@ const formatCurrency = (amount) =>
                         {{ offer.cta_text || "Buy Now" }} —
                         {{ formatCurrency(offer.price) }}
                     </button>
-                </div>
-            </section>
+                </section>
+            </template>
 
             <!-- Checkout Modal -->
             <Teleport to="body">
@@ -219,7 +168,6 @@ const formatCurrency = (amount) =>
                                 />
                             </svg>
                         </button>
-
                         <h3 class="text-lg font-bold text-white mb-1">
                             Complete Your Purchase
                         </h3>
@@ -227,7 +175,6 @@ const formatCurrency = (amount) =>
                             {{ offer.title }} —
                             {{ formatCurrency(offer.price) }}
                         </p>
-
                         <form @submit.prevent="submit" class="space-y-4">
                             <div>
                                 <label
@@ -291,7 +238,6 @@ const formatCurrency = (amount) =>
                                 }}
                             </button>
                         </form>
-
                         <p class="text-xs text-gray-600 mt-4 text-center">
                             Pembayaran diproses melalui
                             <strong class="text-gray-500">Mayar</strong>

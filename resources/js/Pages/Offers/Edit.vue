@@ -125,6 +125,12 @@ const deleteOffer = () => {
                         />
                     </svg>
                 </a>
+                <Link
+                    :href="route('app.offers.landing-builder', offer.id)"
+                    class="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-violet-400 border border-violet-500/30 hover:bg-violet-500/10 rounded-lg transition-all"
+                >
+                    🎨 Landing Builder
+                </Link>
                 <button
                     @click="togglePublish"
                     :class="[

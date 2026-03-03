@@ -13,8 +13,12 @@ class PublicOfferController extends Controller
     {
         $offer = Offer::where('slug', $slug)
             ->where('is_published', true)
-            ->with('workspace:id,name,brand_color')
+            ->with(['workspace:id,name,brand_color', 'landingPage'])
             ->firstOrFail();
+
+        // Get custom sections or generate defaults from offer data
+        $sections = $offer->landingPage?->sections
+            ?? \App\Models\LandingPage::defaultSectionsFromOffer($offer);
 
         return Inertia::render('Public/Offer', [
             'offer' => [
@@ -39,6 +43,7 @@ class PublicOfferController extends Controller
                 'name' => $offer->workspace->name,
                 'brand_color' => $offer->workspace->brand_color ?? '#06b6d4',
             ],
+            'sections' => $sections,
         ]);
     }
 }

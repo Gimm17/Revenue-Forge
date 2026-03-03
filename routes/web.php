@@ -17,6 +17,7 @@ use App\Http\Controllers\App\OfferPublishController;
 use App\Http\Controllers\App\OfferStoreController;
 use App\Http\Controllers\App\OfferUpdateController;
 use App\Http\Controllers\App\OfferDestroyController;
+use App\Http\Controllers\App\LandingPageBuilderController;
 use App\Http\Controllers\App\WorkspaceSettingsController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Public\CheckoutResultController;
@@ -72,6 +73,10 @@ Route::middleware(['auth', 'verified', 'resolve.workspace'])
         Route::delete('/offers/{offer}', OfferDestroyController::class)->name('offers.destroy');
         Route::post('/offers/{offer}/publish', OfferPublishController::class)->name('offers.publish');
         Route::post('/offers/generate', GenerateOfferCopyController::class)->name('offers.generate');
+
+        // Landing Page Builder
+        Route::get('/offers/{offer}/landing-builder', [LandingPageBuilderController::class, 'show'])->name('offers.landing-builder');
+        Route::put('/offers/{offer}/landing-builder', [LandingPageBuilderController::class, 'update'])->name('offers.landing-builder.update');
 
         // Customers
         Route::get('/customers', CustomerIndexController::class)->name('customers.index');
