@@ -4,10 +4,12 @@ namespace App\Actions\Webhook;
 
 use App\Models\CustomerAccess;
 use App\Models\CreditWallet;
+use App\Models\InAppNotification;
 use App\Models\MayarWebhookLog;
 use App\Models\Order;
 use App\Models\Payment;
 use App\Models\Subscription;
+use App\Mail\DigitalDeliveryEmail;
 use App\Mail\NewOrderNotification;
 use App\Mail\OrderReceiptEmail;
 use Illuminate\Support\Facades\Log;
@@ -153,6 +155,29 @@ class ProcessMayarWebhookAction
         if ($order->workspace?->owner?->email) {
             Mail::to($order->workspace->owner->email)->queue(new NewOrderNotification($order));
         }
+
+        // === Digital Product Delivery ===
+        $offer = $order->offer;
+        if ($offer && $offer->delivery_type && $offer->delivery_type !== 'none' && $order->customer?->email) {
+            Mail::to($order->customer->email)->queue(new DigitalDeliveryEmail($order));
+            Log::info('Digital delivery email queued', ['order_id' => $order->id, 'delivery_type' => $offer->delivery_type]);
+        }
+
+        // === In-App Notification for Seller ===
+        InAppNotification::create([
+            'workspace_id' => $order->workspace_id,
+            'type' => 'new_order',
+            'title' => 'New Order Received!',
+            'body' => ($order->customer?->name ?? $order->customer?->email ?? 'Someone') . ' purchased ' . ($offer?->title ?? 'an offer'),
+            'icon' => '💰',
+            'data' => [
+                'order_id' => $order->id,
+                'offer_title' => $offer?->title,
+                'amount' => $order->amount,
+                'currency' => $order->currency,
+                'customer_name' => $order->customer?->name,
+            ],
+        ]);
     }
 
     private function handlePaymentFailed(array $payload): void

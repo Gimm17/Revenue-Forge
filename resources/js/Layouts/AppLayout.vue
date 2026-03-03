@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed } from "vue";
+import { ref, computed, onMounted, onUnmounted } from "vue";
 import { Link, usePage } from "@inertiajs/vue3";
 import Dropdown from "@/Components/Dropdown.vue";
 import DropdownLink from "@/Components/DropdownLink.vue";
@@ -69,6 +69,71 @@ const userInitials = computed(() => {
         .slice(0, 2)
         .join("")
         .toUpperCase();
+});
+
+// Notifications
+const notifications = ref([]);
+const unreadCount = ref(0);
+const notifOpen = ref(false);
+let notifInterval = null;
+
+const fetchNotifications = async () => {
+    try {
+        const res = await fetch("/app/notifications", {
+            headers: {
+                Accept: "application/json",
+                "X-Requested-With": "XMLHttpRequest",
+            },
+        });
+        if (res.ok) {
+            const data = await res.json();
+            notifications.value = data.notifications || [];
+            unreadCount.value = data.unread_count || 0;
+        }
+    } catch (e) {
+        /* silent */
+    }
+};
+
+const markRead = async (id) => {
+    const csrf = document
+        .querySelector('meta[name="csrf-token"]')
+        ?.getAttribute("content");
+    await fetch(`/app/notifications/${id}/read`, {
+        method: "POST",
+        headers: { "X-CSRF-TOKEN": csrf, Accept: "application/json" },
+    });
+    fetchNotifications();
+};
+
+const markAllRead = async () => {
+    const csrf = document
+        .querySelector('meta[name="csrf-token"]')
+        ?.getAttribute("content");
+    await fetch("/app/notifications/read-all", {
+        method: "POST",
+        headers: { "X-CSRF-TOKEN": csrf, Accept: "application/json" },
+    });
+    fetchNotifications();
+};
+
+const timeAgo = (dateStr) => {
+    const diff = Date.now() - new Date(dateStr).getTime();
+    const mins = Math.floor(diff / 60000);
+    if (mins < 1) return "just now";
+    if (mins < 60) return `${mins}m ago`;
+    const hrs = Math.floor(mins / 60);
+    if (hrs < 24) return `${hrs}h ago`;
+    return `${Math.floor(hrs / 24)}d ago`;
+};
+
+onMounted(() => {
+    fetchNotifications();
+    notifInterval = setInterval(fetchNotifications, 30000);
+});
+
+onUnmounted(() => {
+    if (notifInterval) clearInterval(notifInterval);
 });
 </script>
 
@@ -353,6 +418,122 @@ const userInitials = computed(() => {
 
                 <!-- Right side actions -->
                 <div class="flex items-center gap-3">
+                    <!-- Notification Bell -->
+                    <div class="relative">
+                        <button
+                            @click="notifOpen = !notifOpen"
+                            class="relative p-2 rounded-lg text-gray-400 hover:text-white hover:bg-white/[0.06] transition-colors"
+                        >
+                            <svg
+                                class="w-5 h-5"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="1.5"
+                                    d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"
+                                />
+                            </svg>
+                            <span
+                                v-if="unreadCount > 0"
+                                class="absolute -top-0.5 -right-0.5 w-4.5 h-4.5 flex items-center justify-center text-[10px] font-bold text-white bg-red-500 rounded-full min-w-[18px] h-[18px] leading-none"
+                            >
+                                {{ unreadCount > 9 ? "9+" : unreadCount }}
+                            </span>
+                        </button>
+
+                        <!-- Notification Dropdown -->
+                        <transition
+                            enter-active-class="transition duration-150 ease-out"
+                            enter-from-class="opacity-0 scale-95"
+                            enter-to-class="opacity-100 scale-100"
+                            leave-active-class="transition duration-100 ease-in"
+                            leave-from-class="opacity-100 scale-100"
+                            leave-to-class="opacity-0 scale-95"
+                        >
+                            <div
+                                v-if="notifOpen"
+                                class="absolute right-0 top-full mt-2 w-80 max-h-96 bg-[#1a1c27] border border-white/[0.08] rounded-xl shadow-2xl overflow-hidden z-50"
+                            >
+                                <div
+                                    class="flex items-center justify-between px-4 py-3 border-b border-white/[0.06]"
+                                >
+                                    <h3
+                                        class="text-sm font-semibold text-white"
+                                    >
+                                        Notifications
+                                    </h3>
+                                    <button
+                                        v-if="unreadCount > 0"
+                                        @click="markAllRead"
+                                        class="text-xs text-cyan-400 hover:text-cyan-300 transition-colors"
+                                    >
+                                        Mark all read
+                                    </button>
+                                </div>
+                                <div class="overflow-y-auto max-h-72">
+                                    <div
+                                        v-for="n in notifications"
+                                        :key="n.id"
+                                        :class="[
+                                            'px-4 py-3 border-b border-white/[0.04] hover:bg-white/[0.04] cursor-pointer transition-colors',
+                                            !n.read_at
+                                                ? 'bg-cyan-500/[0.04]'
+                                                : '',
+                                        ]"
+                                        @click="!n.read_at && markRead(n.id)"
+                                    >
+                                        <div class="flex items-start gap-3">
+                                            <span
+                                                class="text-lg leading-none mt-0.5"
+                                                >{{ n.icon || "💰" }}</span
+                                            >
+                                            <div class="flex-1 min-w-0">
+                                                <p
+                                                    class="text-sm font-medium text-white truncate"
+                                                >
+                                                    {{ n.title }}
+                                                </p>
+                                                <p
+                                                    class="text-xs text-gray-400 truncate"
+                                                >
+                                                    {{ n.body }}
+                                                </p>
+                                                <p
+                                                    class="text-[10px] text-gray-600 mt-1"
+                                                >
+                                                    {{ timeAgo(n.created_at) }}
+                                                </p>
+                                            </div>
+                                            <span
+                                                v-if="!n.read_at"
+                                                class="w-2 h-2 rounded-full bg-cyan-400 mt-1.5 shrink-0"
+                                            />
+                                        </div>
+                                    </div>
+                                    <div
+                                        v-if="notifications.length === 0"
+                                        class="px-4 py-8 text-center"
+                                    >
+                                        <p class="text-sm text-gray-500">
+                                            No notifications yet
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </transition>
+
+                        <!-- Click outside to close -->
+                        <div
+                            v-if="notifOpen"
+                            class="fixed inset-0 z-40"
+                            @click="notifOpen = false"
+                        />
+                    </div>
+
                     <slot name="actions" />
                 </div>
             </header>

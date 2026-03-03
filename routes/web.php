@@ -5,6 +5,7 @@ use App\Http\Controllers\App\AffiliateLinkStoreController;
 use App\Http\Controllers\App\AffiliateShowController;
 use App\Http\Controllers\App\AnalyticsController;
 use App\Http\Controllers\App\BillingController;
+use App\Http\Controllers\App\NotificationController;
 use App\Http\Controllers\App\CustomerIndexController;
 use App\Http\Controllers\App\CustomerShowController;
 use App\Http\Controllers\App\SendCustomerPortalLinkController;
@@ -94,6 +95,11 @@ Route::middleware(['auth', 'verified', 'resolve.workspace'])
 
         // Billing / Orders
         Route::get('/billing', BillingController::class)->name('billing');
+
+        // Notifications
+        Route::get('/notifications', [NotificationController::class, 'index'])->name('notifications.index');
+        Route::post('/notifications/{notification}/read', [NotificationController::class, 'markRead'])->name('notifications.read');
+        Route::post('/notifications/read-all', [NotificationController::class, 'markAllRead'])->name('notifications.read-all');
 
         // Settings
         Route::get('/settings', [WorkspaceSettingsController::class, 'edit'])->name('settings.edit');

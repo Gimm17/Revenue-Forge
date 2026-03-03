@@ -24,6 +24,9 @@ const form = useForm({
     currency: props.offer.currency || "IDR",
     interval: props.offer.interval,
     credit_amount: props.offer.credit_amount,
+    delivery_type: props.offer.delivery_type || "none",
+    delivery_content: props.offer.delivery_content || "",
+    delivery_label: props.offer.delivery_label || "",
 });
 
 const addBenefit = () => form.benefits.push("");
@@ -245,6 +248,94 @@ const deleteOffer = () => {
                             class="w-full px-4 py-2.5 bg-white/[0.06] border border-white/[0.1] rounded-lg text-white text-sm focus:border-cyan-500/50 focus:outline-none"
                         />
                     </div>
+                </div>
+
+                <!-- Digital Delivery -->
+                <div
+                    class="rounded-xl bg-white/[0.04] border border-white/[0.08] p-6 space-y-4"
+                >
+                    <h2
+                        class="text-sm font-semibold text-gray-300 uppercase tracking-wider"
+                    >
+                        📦 Digital Delivery
+                    </h2>
+                    <p class="text-xs text-gray-500">
+                        Automatically deliver content to buyers after payment.
+                    </p>
+
+                    <div>
+                        <label
+                            class="block text-sm font-medium text-gray-400 mb-1"
+                            >Delivery Type</label
+                        >
+                        <select
+                            v-model="form.delivery_type"
+                            class="w-full px-4 py-2.5 bg-white/[0.06] border border-white/[0.1] rounded-lg text-white text-sm focus:border-cyan-500/50 focus:ring-1 focus:ring-cyan-500/30 focus:outline-none"
+                        >
+                            <option value="none">No Delivery</option>
+                            <option value="file_url">
+                                File / Download URL
+                            </option>
+                            <option value="redirect_url">
+                                Access Link / Redirect
+                            </option>
+                            <option value="text_content">
+                                Text / Instructions
+                            </option>
+                        </select>
+                    </div>
+
+                    <template v-if="form.delivery_type !== 'none'">
+                        <div>
+                            <label
+                                class="block text-sm font-medium text-gray-400 mb-1"
+                                >Button / Section Label</label
+                            >
+                            <input
+                                v-model="form.delivery_label"
+                                type="text"
+                                class="w-full px-4 py-2.5 bg-white/[0.06] border border-white/[0.1] rounded-lg text-white text-sm focus:border-cyan-500/50 focus:ring-1 focus:ring-cyan-500/30 focus:outline-none"
+                                :placeholder="
+                                    form.delivery_type === 'file_url'
+                                        ? 'Download Your Ebook'
+                                        : form.delivery_type === 'redirect_url'
+                                          ? 'Access Your Course'
+                                          : 'Your Instructions'
+                                "
+                            />
+                        </div>
+
+                        <div>
+                            <label
+                                class="block text-sm font-medium text-gray-400 mb-1"
+                                >{{
+                                    form.delivery_type === "file_url"
+                                        ? "Download URL"
+                                        : form.delivery_type === "redirect_url"
+                                          ? "Access URL"
+                                          : "Delivery Content"
+                                }}</label
+                            >
+                            <input
+                                v-if="form.delivery_type !== 'text_content'"
+                                v-model="form.delivery_content"
+                                type="url"
+                                class="w-full px-4 py-2.5 bg-white/[0.06] border border-white/[0.1] rounded-lg text-white text-sm focus:border-cyan-500/50 focus:ring-1 focus:ring-cyan-500/30 focus:outline-none"
+                                :placeholder="
+                                    form.delivery_type === 'file_url'
+                                        ? 'https://drive.google.com/file/...'
+                                        : 'https://your-course.com/access'
+                                "
+                            />
+                            <textarea
+                                v-else
+                                v-model="form.delivery_content"
+                                rows="4"
+                                class="w-full px-4 py-2.5 bg-white/[0.06] border border-white/[0.1] rounded-lg text-white text-sm focus:border-cyan-500/50 focus:ring-1 focus:ring-cyan-500/30 focus:outline-none"
+                                placeholder="Instructions, license keys, access details..."
+                            />
+                        </div>
+                    </template>
                 </div>
 
                 <!-- Benefits -->

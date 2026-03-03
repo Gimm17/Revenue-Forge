@@ -20,6 +20,7 @@ class Offer extends Model
         'price', 'currency', 'interval', 'credit_amount',
         'is_published', 'published_at', 'mayar_product_id',
         'cover_image_url',
+        'delivery_type', 'delivery_content', 'delivery_label',
     ];
 
     protected function casts(): array
