@@ -1,5 +1,5 @@
 #syntax=docker/dockerfile:1.4
-FROM serversideup/php:8.2-fpm-nginx
+FROM serversideup/php:8.4-fpm-nginx
 
 # Switch to root to install dependencies
 USER root
