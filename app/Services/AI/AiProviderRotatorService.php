@@ -79,14 +79,11 @@ class AiProviderRotatorService
 
             // Rotate on auth / rate-limit status codes
             if (in_array($response->status(), self::ROTATE_ON_STATUS)) {
-                $body = $response->json();
-                $code = (string) ($body['error']['code'] ?? $response->status());
-                $msg  = $body['error']['message'] ?? $response->body();
-                return ['success' => false, 'error' => "HTTP {$response->status()} [{$code}]: {$msg}"];
+                return ['success' => false, 'error' => "HTTP {$response->status()} " . $this->extractErrorMessage($response)];
             }
 
             if (!$response->successful()) {
-                return ['success' => false, 'error' => "HTTP {$response->status()}: " . $response->body()];
+                return ['success' => false, 'error' => "HTTP {$response->status()} " . $this->extractErrorMessage($response)];
             }
 
             $body    = $response->json();
@@ -102,5 +99,36 @@ class AiProviderRotatorService
         } catch (\Exception $e) {
             return ['success' => false, 'error' => $e->getMessage()];
         }
+    }
+
+    private function extractErrorMessage(\Illuminate\Http\Client\Response $response): string
+    {
+        $body = $response->json();
+
+        if (is_array($body)) {
+            // Handle Gemini-style array format: [{"error": {"message": "..."}}]
+            if (isset($body[0]['error']['message'])) {
+                $code = $body[0]['error']['code'] ?? '';
+                $msg  = $body[0]['error']['message'];
+                // Clean up long Gemini messages with newlines
+                $msg = explode("\n", $msg)[0];
+                return $code ? "[{$code}]: {$msg}" : ": {$msg}";
+            }
+            
+            // Handle standard openai-compatible format: {"error": {"message": "..."}}
+            if (isset($body['error']['message'])) {
+                $code = $body['error']['code'] ?? '';
+                $msg  = $body['error']['message'];
+                return $code ? "[{$code}]: {$msg}" : ": {$msg}";
+            }
+        }
+
+        // Fallback for unknown formats, truncate if too long
+        $raw = trim($response->body());
+        if (strlen($raw) > 150) {
+            return ': ' . substr($raw, 0, 150) . '... (truncated)';
+        }
+        
+        return $raw ? ": {$raw}" : ': Unknown error';
     }
 }
