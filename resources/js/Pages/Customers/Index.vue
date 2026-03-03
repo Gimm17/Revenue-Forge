@@ -42,6 +42,15 @@ const formatCurrency = (amount) =>
             <h1 class="text-xl font-bold text-white">Customers</h1>
         </template>
 
+        <template #actions>
+            <a
+                :href="route('app.customers.export')"
+                class="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-300 bg-white/[0.06] border border-white/[0.08] rounded-lg hover:bg-white/[0.1] hover:text-white transition-all"
+            >
+                📥 Export CSV
+            </a>
+        </template>
+
         <!-- Filters -->
         <div class="mb-6 flex flex-col sm:flex-row gap-4">
             <input

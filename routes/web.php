@@ -5,6 +5,8 @@ use App\Http\Controllers\App\AffiliateLinkStoreController;
 use App\Http\Controllers\App\AffiliateShowController;
 use App\Http\Controllers\App\AnalyticsController;
 use App\Http\Controllers\App\BillingController;
+use App\Http\Controllers\App\CouponController;
+use App\Http\Controllers\App\CustomerExportController;
 use App\Http\Controllers\App\NotificationController;
 use App\Http\Controllers\App\CustomerIndexController;
 use App\Http\Controllers\App\CustomerShowController;
@@ -100,6 +102,16 @@ Route::middleware(['auth', 'verified', 'resolve.workspace'])
         Route::get('/notifications', [NotificationController::class, 'index'])->name('notifications.index');
         Route::post('/notifications/{notification}/read', [NotificationController::class, 'markRead'])->name('notifications.read');
         Route::post('/notifications/read-all', [NotificationController::class, 'markAllRead'])->name('notifications.read-all');
+
+        // Coupons
+        Route::get('/coupons', [CouponController::class, 'index'])->name('coupons.index');
+        Route::post('/coupons', [CouponController::class, 'store'])->name('coupons.store');
+        Route::post('/coupons/{coupon}/toggle', [CouponController::class, 'toggle'])->name('coupons.toggle');
+        Route::delete('/coupons/{coupon}', [CouponController::class, 'destroy'])->name('coupons.destroy');
+        Route::get('/coupons/generate', [CouponController::class, 'generate'])->name('coupons.generate');
+
+        // Customer Export
+        Route::get('/customers/export', CustomerExportController::class)->name('customers.export');
 
         // Settings
         Route::get('/settings', [WorkspaceSettingsController::class, 'edit'])->name('settings.edit');
