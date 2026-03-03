@@ -23,7 +23,7 @@ class GenerateOfferAction
             'offer_id' => $offer?->id,
             'user_id' => $userId,
             'input_params' => $input,
-            'output_content' => $result['data'],
+            'output_content' => $result['data'] ?? [],
             'model_used' => $result['model_used'],
             'tokens_used' => $result['tokens_used'],
             'duration_ms' => $result['duration_ms'],
@@ -42,8 +42,9 @@ class GenerateOfferAction
 
         return [
             'success' => $result['success'],
-            'data' => $result['data'],
-            'generation_id' => $generation->id,
+            'data' => $result['data'] ?? null,
+            'error' => $result['error'] ?? null,
+            'generation_id' => $generation->id ?? null,
         ];
     }
 }

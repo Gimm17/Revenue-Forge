@@ -49,9 +49,16 @@ const generateWithAI = async () => {
             body: JSON.stringify(aiForm.value),
         });
         const data = await response.json();
+
+        if (!data.success) {
+            alert(data.error || "AI generation failed.");
+            return;
+        }
+
         aiResult.value = data.data;
     } catch (e) {
-        console.error("AI generation failed", e);
+        console.error("AI generation exception", e);
+        alert("An error occurred while communicating with the AI server.");
     } finally {
         generating.value = false;
     }

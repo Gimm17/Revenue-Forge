@@ -29,11 +29,31 @@ return [
     */
 
     'ai' => [
-        'provider' => env('AI_PROVIDER', 'openai_compatible'),
-        'base_url' => env('AI_BASE_URL', 'https://api.openai.com/v1'),
-        'api_key' => env('AI_API_KEY'),
-        'model' => env('AI_MODEL', 'gpt-4o-mini'),
-        'max_tokens' => env('AI_MAX_TOKENS', 2000),
-        'temperature' => env('AI_TEMPERATURE', 0.7),
+        'providers' => [
+            [
+                'name'       => 'zhipu',
+                'base_url'   => env('AI_ZHIPU_BASE_URL', 'https://api.z.ai/api/coding/paas/v4'),
+                'api_key'    => env('AI_ZHIPU_API_KEY'),
+                'model'      => env('AI_ZHIPU_MODEL', 'glm-4.6'),
+                'max_tokens' => (int) env('AI_MAX_TOKENS', 5000),
+                'temperature'=> (float) env('AI_TEMPERATURE', 0.7),
+            ],
+            [
+                'name'       => 'kimi',
+                'base_url'   => env('AI_KIMI_BASE_URL', 'https://api.moonshot.cn/v1'),
+                'api_key'    => env('AI_KIMI_API_KEY'),
+                'model'      => env('AI_KIMI_MODEL', 'moonshot-v1-8k'),
+                'max_tokens' => (int) env('AI_MAX_TOKENS', 5000),
+                'temperature'=> (float) env('AI_TEMPERATURE', 0.7),
+            ],
+            [
+                'name'       => 'gemini',
+                'base_url'   => env('AI_GEMINI_BASE_URL', 'https://generativelanguage.googleapis.com/v1beta/openai'),
+                'api_key'    => env('AI_GEMINI_API_KEY'),
+                'model'      => env('AI_GEMINI_MODEL', 'gemini-2.0-flash'),
+                'max_tokens' => (int) env('AI_MAX_TOKENS', 5000),
+                'temperature'=> (float) env('AI_TEMPERATURE', 0.7),
+            ],
+        ],
     ],
 ];
