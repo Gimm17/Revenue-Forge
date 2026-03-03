@@ -23,8 +23,8 @@ SESSION_DRIVER = "database"
 # 1. Main Web Service (Runs Nginx/PHP-FPM)
 [[services]]
 name = "web"
-# ServersideUp default start command for web
-startCommand = "supervisord -c /etc/supervisor/supervisord.conf"
+# Use default ServerSideUp initialization
+# startCommand = "/init" (Already default in image)
 
 # 2. Queue Worker Service (Runs php artisan queue:work)
 [[services]]
