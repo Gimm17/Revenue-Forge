@@ -14,6 +14,7 @@ APP_DEBUG = "false"
 QUEUE_CONNECTION = "database"
 CACHE_STORE = "database"
 SESSION_DRIVER = "database"
+PORT = "8080"
 
 # Add your MAYAR_API_KEY, MAYAR_WEBHOOK_SECRET, DB_CONNECTION, APP_KEY
 # and DB_DATABASE directly in the Railway variables dashboard.
