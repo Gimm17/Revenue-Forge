@@ -39,6 +39,12 @@ const typeColorMap = {
     cyan: "bg-cyan-500/10 text-cyan-400 border-cyan-500/20",
 };
 
+const duplicateOffer = (id) => {
+    if (confirm("Duplicate this offer?")) {
+        router.post(route("app.offers.duplicate", id));
+    }
+};
+
 const copyLink = (slug) => {
     const url = route("offer.show", { slug });
     navigator.clipboard.writeText(url);
@@ -159,6 +165,25 @@ const viewPage = (slug) => {
                                     stroke-linejoin="round"
                                     stroke-width="2"
                                     d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+                                />
+                            </svg>
+                        </button>
+                        <button
+                            @click.prevent="duplicateOffer(offer.id)"
+                            class="opacity-0 group-hover:opacity-100 p-1.5 rounded-md hover:bg-white/[0.08] text-gray-400 hover:text-violet-400 transition-all"
+                            title="Duplicate offer"
+                        >
+                            <svg
+                                class="w-4 h-4"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"
                                 />
                             </svg>
                         </button>

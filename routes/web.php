@@ -9,7 +9,9 @@ use App\Http\Controllers\App\BroadcastController;
 use App\Http\Controllers\App\CouponController;
 use App\Http\Controllers\App\CustomerExportController;
 use App\Http\Controllers\App\NotificationController;
+use App\Http\Controllers\App\OfferDuplicateController;
 use App\Http\Controllers\App\TestimonialController;
+use App\Http\Controllers\App\WebhookLogController;
 use App\Http\Controllers\App\CustomerIndexController;
 use App\Http\Controllers\App\CustomerShowController;
 use App\Http\Controllers\App\SendCustomerPortalLinkController;
@@ -77,6 +79,7 @@ Route::middleware(['auth', 'verified', 'resolve.workspace'])
         Route::put('/offers/{offer}', OfferUpdateController::class)->name('offers.update');
         Route::delete('/offers/{offer}', OfferDestroyController::class)->name('offers.destroy');
         Route::post('/offers/{offer}/publish', OfferPublishController::class)->name('offers.publish');
+        Route::post('/offers/{offer}/duplicate', OfferDuplicateController::class)->name('offers.duplicate');
         Route::post('/offers/generate', GenerateOfferCopyController::class)->middleware('throttle:ai-generate')->name('offers.generate');
 
         // Landing Page Builder
@@ -125,6 +128,9 @@ Route::middleware(['auth', 'verified', 'resolve.workspace'])
         Route::post('/testimonials', [TestimonialController::class, 'store'])->name('testimonials.store');
         Route::delete('/testimonials/{testimonial}', [TestimonialController::class, 'destroy'])->name('testimonials.destroy');
         Route::post('/testimonials/{testimonial}/toggle', [TestimonialController::class, 'toggleFeatured'])->name('testimonials.toggle');
+
+        // Webhook Logs
+        Route::get('/webhooks', WebhookLogController::class)->name('webhooks.index');
 
         // Settings
         Route::get('/settings', [WorkspaceSettingsController::class, 'edit'])->name('settings.edit');
