@@ -3,6 +3,7 @@ import PublicLayout from "@/Layouts/PublicLayout.vue";
 import { Head, useForm } from "@inertiajs/vue3";
 import { ref, computed } from "vue";
 import SectionRenderer from "@/Components/LandingBuilder/SectionRenderer.vue";
+import ChatWidget from "@/Components/ChatWidget.vue";
 
 const props = defineProps({
     offer: Object,
@@ -246,5 +247,15 @@ const sortedSections = computed(() =>
                 </div>
             </Teleport>
         </div>
+
+        <!-- Chat Widget -->
+        <ChatWidget
+            :enabled="workspace.chat_widget_enabled"
+            :greeting="workspace.chat_greeting"
+            :email="workspace.chat_email"
+            :brand-color="workspace.brand_color"
+            :secondary-color="workspace.secondary_color"
+            :workspace-name="workspace.name"
+        />
     </PublicLayout>
 </template>

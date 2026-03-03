@@ -48,6 +48,11 @@ class PublicOfferController extends Controller
             'workspace' => [
                 'name' => $offer->workspace->name,
                 'brand_color' => $offer->workspace->brand_color ?? '#06b6d4',
+                'secondary_color' => $offer->workspace->secondary_color ?? '#8b5cf6',
+                'font_family' => $offer->workspace->font_family ?? 'Inter',
+                'chat_widget_enabled' => $offer->workspace->chat_widget_enabled ?? false,
+                'chat_greeting' => $offer->workspace->chat_greeting ?? 'Hi! How can I help you?',
+                'chat_email' => $offer->workspace->chat_email,
             ],
             'sections' => $sections,
         ]);

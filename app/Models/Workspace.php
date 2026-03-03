@@ -17,6 +17,11 @@ class Workspace extends Model
         'slug',
         'logo_url',
         'brand_color',
+        'secondary_color',
+        'font_family',
+        'chat_widget_enabled',
+        'chat_greeting',
+        'chat_email',
         'is_active',
         'plan_id',
         'plan_status',
@@ -27,6 +32,7 @@ class Workspace extends Model
     {
         return [
             'is_active' => 'boolean',
+            'chat_widget_enabled' => 'boolean',
             'trial_ends_at' => 'datetime',
         ];
     }
