@@ -38,6 +38,10 @@ RUN php artisan optimize:clear \
     && php artisan route:cache \
     && php artisan view:cache
 
+# Auto-run Migrations & Seeders during boot
+ENV AUTORUN_LARAVEL_MIGRATION=true
+ENV AUTORUN_LARAVEL_SEED=true
+
 # Railway expects apps to bind to PORT env variable if dynamic, but ServerSideUp image uses 8080 by default
 ENV PORT=8080
 
