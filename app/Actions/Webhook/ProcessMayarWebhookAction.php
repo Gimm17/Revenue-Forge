@@ -8,7 +8,10 @@ use App\Models\MayarWebhookLog;
 use App\Models\Order;
 use App\Models\Payment;
 use App\Models\Subscription;
+use App\Mail\NewOrderNotification;
+use App\Mail\OrderReceiptEmail;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 
 class ProcessMayarWebhookAction
 {
@@ -136,6 +139,19 @@ class ProcessMayarWebhookAction
                     ['gross_revenue' => 0, 'paid_orders' => 0, 'new_customers' => 0, 'active_subscriptions' => 0, 'credits_sold' => 0, 'affiliate_revenue' => 0]
                 )->increment('affiliate_revenue', $commissionAmount);
             }
+        }
+
+        // === Send Email Notifications ===
+        $order->load(['offer', 'customer', 'workspace.owner']);
+
+        // Receipt to buyer
+        if ($order->customer?->email) {
+            Mail::to($order->customer->email)->queue(new OrderReceiptEmail($order));
+        }
+
+        // Notification to seller
+        if ($order->workspace?->owner?->email) {
+            Mail::to($order->workspace->owner->email)->queue(new NewOrderNotification($order));
         }
     }
 

@@ -39,7 +39,7 @@ Route::get('/pricing', PricingController::class)->name('pricing');
 
 // Public Offer & Checkout
 Route::get('/o/{slug}', PublicOfferController::class)->name('offer.show');
-Route::post('/o/{slug}/checkout', OfferCheckoutController::class)->name('offer.checkout');
+Route::post('/o/{slug}/checkout', OfferCheckoutController::class)->middleware('throttle:checkout')->name('offer.checkout');
 Route::get('/checkout/success', [CheckoutResultController::class, 'success'])->name('checkout.success');
 Route::get('/checkout/cancel', [CheckoutResultController::class, 'cancel'])->name('checkout.cancel');
 
@@ -72,7 +72,7 @@ Route::middleware(['auth', 'verified', 'resolve.workspace'])
         Route::put('/offers/{offer}', OfferUpdateController::class)->name('offers.update');
         Route::delete('/offers/{offer}', OfferDestroyController::class)->name('offers.destroy');
         Route::post('/offers/{offer}/publish', OfferPublishController::class)->name('offers.publish');
-        Route::post('/offers/generate', GenerateOfferCopyController::class)->name('offers.generate');
+        Route::post('/offers/generate', GenerateOfferCopyController::class)->middleware('throttle:ai-generate')->name('offers.generate');
 
         // Landing Page Builder
         Route::get('/offers/{offer}/landing-builder', [LandingPageBuilderController::class, 'show'])->name('offers.landing-builder');
