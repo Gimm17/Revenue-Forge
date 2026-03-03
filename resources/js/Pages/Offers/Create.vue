@@ -56,6 +56,7 @@ const generateWithAI = async () => {
         }
 
         aiResult.value = data.data;
+        applyAiResult();
     } catch (e) {
         console.error("AI generation exception", e);
         alert("An error occurred while communicating with the AI server.");
