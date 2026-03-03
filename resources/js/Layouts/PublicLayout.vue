@@ -1,8 +1,13 @@
 <script setup>
 import { Link } from "@inertiajs/vue3";
-import { ref } from "vue";
+import { ref, watch } from "vue";
 
-const mobileMenuOpen = ref(false);
+const sidebarOpen = ref(false);
+
+// Prevent body scroll when sidebar is open
+watch(sidebarOpen, (open) => {
+    document.body.style.overflow = open ? "hidden" : "";
+});
 </script>
 
 <template>
@@ -71,12 +76,10 @@ const mobileMenuOpen = ref(false);
                     <!-- Mobile hamburger button -->
                     <button
                         class="sm:hidden flex items-center justify-center w-10 h-10 rounded-lg text-gray-400 hover:text-white hover:bg-white/[0.06] transition-all"
-                        @click="mobileMenuOpen = !mobileMenuOpen"
-                        aria-label="Toggle menu"
+                        @click="sidebarOpen = true"
+                        aria-label="Open menu"
                     >
-                        <!-- Hamburger icon -->
                         <svg
-                            v-if="!mobileMenuOpen"
                             class="w-6 h-6"
                             fill="none"
                             stroke="currentColor"
@@ -89,10 +92,77 @@ const mobileMenuOpen = ref(false);
                                 d="M4 6h16M4 12h16M4 18h16"
                             />
                         </svg>
-                        <!-- Close icon -->
+                    </button>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Mobile Sidebar Overlay -->
+        <transition
+            enter-active-class="transition-opacity duration-300 ease-out"
+            enter-from-class="opacity-0"
+            enter-to-class="opacity-100"
+            leave-active-class="transition-opacity duration-200 ease-in"
+            leave-from-class="opacity-100"
+            leave-to-class="opacity-0"
+        >
+            <div
+                v-if="sidebarOpen"
+                class="fixed inset-0 z-[60] bg-black/60 backdrop-blur-sm sm:hidden"
+                @click="sidebarOpen = false"
+            />
+        </transition>
+
+        <!-- Mobile Sidebar Panel -->
+        <transition
+            enter-active-class="transition-transform duration-300 ease-out"
+            enter-from-class="translate-x-full"
+            enter-to-class="translate-x-0"
+            leave-active-class="transition-transform duration-200 ease-in"
+            leave-from-class="translate-x-0"
+            leave-to-class="translate-x-full"
+        >
+            <div
+                v-if="sidebarOpen"
+                class="fixed top-0 right-0 bottom-0 z-[70] w-72 bg-[#0d0e14] border-l border-white/[0.08] shadow-2xl sm:hidden flex flex-col"
+            >
+                <!-- Sidebar Header -->
+                <div
+                    class="flex items-center justify-between h-16 px-5 border-b border-white/[0.06]"
+                >
+                    <Link
+                        href="/"
+                        class="flex items-center gap-2"
+                        @click="sidebarOpen = false"
+                    >
+                        <div
+                            class="w-7 h-7 rounded-lg bg-gradient-to-br from-cyan-400 to-violet-500 flex items-center justify-center"
+                        >
+                            <svg
+                                class="w-4 h-4 text-white"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M13 10V3L4 14h7v7l9-11h-7z"
+                                />
+                            </svg>
+                        </div>
+                        <span class="text-base font-bold text-white"
+                            >RevenueForge</span
+                        >
+                    </Link>
+                    <button
+                        class="w-8 h-8 flex items-center justify-center rounded-lg text-gray-400 hover:text-white hover:bg-white/[0.06] transition-all"
+                        @click="sidebarOpen = false"
+                        aria-label="Close menu"
+                    >
                         <svg
-                            v-else
-                            class="w-6 h-6"
+                            class="w-5 h-5"
                             fill="none"
                             stroke="currentColor"
                             viewBox="0 0 24 24"
@@ -106,59 +176,70 @@ const mobileMenuOpen = ref(false);
                         </svg>
                     </button>
                 </div>
-            </div>
 
-            <!-- Mobile Menu Panel -->
-            <transition
-                enter-active-class="transition duration-200 ease-out"
-                enter-from-class="opacity-0 -translate-y-2"
-                enter-to-class="opacity-100 translate-y-0"
-                leave-active-class="transition duration-150 ease-in"
-                leave-from-class="opacity-100 translate-y-0"
-                leave-to-class="opacity-0 -translate-y-2"
-            >
-                <div
-                    v-if="mobileMenuOpen"
-                    class="sm:hidden bg-[#0a0b10]/95 backdrop-blur-xl border-b border-white/[0.06]"
-                >
-                    <div class="px-4 py-4 space-y-2">
-                        <Link
-                            href="/#features"
-                            class="block px-4 py-3 text-sm text-gray-300 hover:text-white hover:bg-white/[0.06] rounded-lg transition-colors"
-                            @click="mobileMenuOpen = false"
+                <!-- Sidebar Links -->
+                <div class="flex-1 px-4 py-4 space-y-1 overflow-y-auto">
+                    <Link
+                        href="/#features"
+                        class="flex items-center gap-3 px-3 py-3 text-sm text-gray-300 hover:text-white hover:bg-white/[0.06] rounded-lg transition-colors"
+                        @click="sidebarOpen = false"
+                    >
+                        <svg
+                            class="w-5 h-5 text-gray-500"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
                         >
-                            Features
-                        </Link>
-                        <Link
-                            href="/pricing"
-                            class="block px-4 py-3 text-sm text-gray-300 hover:text-white hover:bg-white/[0.06] rounded-lg transition-colors"
-                            @click="mobileMenuOpen = false"
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="1.5"
+                                d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"
+                            />
+                        </svg>
+                        Features
+                    </Link>
+                    <Link
+                        href="/pricing"
+                        class="flex items-center gap-3 px-3 py-3 text-sm text-gray-300 hover:text-white hover:bg-white/[0.06] rounded-lg transition-colors"
+                        @click="sidebarOpen = false"
+                    >
+                        <svg
+                            class="w-5 h-5 text-gray-500"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
                         >
-                            Pricing
-                        </Link>
-
-                        <div
-                            class="border-t border-white/[0.06] pt-3 mt-3 space-y-2"
-                        >
-                            <Link
-                                href="/login"
-                                class="block px-4 py-3 text-sm text-gray-300 hover:text-white hover:bg-white/[0.06] rounded-lg transition-colors"
-                                @click="mobileMenuOpen = false"
-                            >
-                                Sign In
-                            </Link>
-                            <Link
-                                href="/register"
-                                class="block px-4 py-3 text-sm font-medium text-center text-white bg-gradient-to-r from-cyan-500 to-violet-600 rounded-lg hover:from-cyan-400 hover:to-violet-500 transition-all shadow-lg shadow-cyan-500/20"
-                                @click="mobileMenuOpen = false"
-                            >
-                                Get Started
-                            </Link>
-                        </div>
-                    </div>
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="1.5"
+                                d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                            />
+                        </svg>
+                        Pricing
+                    </Link>
                 </div>
-            </transition>
-        </nav>
+
+                <!-- Sidebar Bottom -->
+                <div class="px-4 py-4 border-t border-white/[0.06] space-y-2">
+                    <Link
+                        href="/login"
+                        class="flex items-center justify-center w-full px-4 py-2.5 text-sm text-gray-300 hover:text-white border border-white/[0.1] rounded-lg hover:bg-white/[0.06] transition-all"
+                        @click="sidebarOpen = false"
+                    >
+                        Sign In
+                    </Link>
+                    <Link
+                        href="/register"
+                        class="flex items-center justify-center w-full px-4 py-2.5 text-sm font-medium text-white bg-gradient-to-r from-cyan-500 to-violet-600 rounded-lg hover:from-cyan-400 hover:to-violet-500 transition-all shadow-lg shadow-cyan-500/20"
+                        @click="sidebarOpen = false"
+                    >
+                        Get Started
+                    </Link>
+                </div>
+            </div>
+        </transition>
 
         <!-- Page content -->
         <main class="pt-16">
