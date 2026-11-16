@@ -1,5 +1,5 @@
 <script setup>
-import AppLayout from "@/Layouts/AppLayout.vue";
+import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import { Head, Link, router } from "@inertiajs/vue3";
 import { ref, watch } from "vue";
 
@@ -60,18 +60,22 @@ const viewPage = (slug) => {
 <template>
     <Head title="Offers" />
 
-    <AppLayout>
+    <AuthenticatedLayout>
         <template #header>
-            <h1 class="text-xl font-bold text-white">Offers</h1>
+            <h1
+                class="text-2xl font-extrabold tracking-tight text-gray-900 sm:text-3xl"
+            >
+                Offers
+            </h1>
         </template>
 
         <template #actions>
             <Link
                 :href="route('app.offers.create')"
-                class="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-gradient-to-r from-cyan-500 to-violet-600 rounded-lg hover:from-cyan-400 hover:to-violet-500 transition-all shadow-lg shadow-cyan-500/20"
+                class="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-[#25f47b] to-[#00D261] px-5 py-2.5 text-sm font-bold text-white shadow-md shadow-[#25f47b]/30 transition-all hover:scale-105 hover:shadow-[#25f47b]/40 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#00D261]"
             >
                 <svg
-                    class="w-4 h-4"
+                    class="-ml-0.5 h-5 w-5"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -93,11 +97,11 @@ const viewPage = (slug) => {
                 v-model="search"
                 type="text"
                 placeholder="Search offers by title or slug..."
-                class="flex-1 w-full max-w-md px-4 py-2 bg-white/[0.06] border border-white/[0.1] rounded-lg text-white text-sm focus:border-cyan-500/50 focus:outline-none focus:ring-1 focus:ring-cyan-500/30 transition-colors placeholder-gray-500"
+                class="flex-1 w-full max-w-md px-4 py-2 bg-white border border-gray-200 rounded-xl text-gray-900 text-sm focus:border-[#00D261]/50 focus:outline-none focus:ring-1 focus:ring-[#00D261]/30 transition-colors placeholder-gray-400 shadow-sm"
             />
             <select
                 v-model="typeFilter"
-                class="w-full sm:w-48 px-4 py-2 bg-[#13151d] border border-white/[0.1] rounded-lg text-white text-sm focus:border-cyan-500/50 focus:outline-none focus:ring-1 focus:ring-cyan-500/30 transition-colors"
+                class="w-full sm:w-48 px-4 py-2 bg-white border border-gray-200 rounded-xl text-gray-900 text-sm focus:border-[#00D261]/50 focus:outline-none focus:ring-1 focus:ring-[#00D261]/30 transition-colors shadow-sm"
             >
                 <option value="">All Types</option>
                 <option v-for="t in offerTypes" :key="t.value" :value="t.value">
@@ -109,29 +113,29 @@ const viewPage = (slug) => {
         <!-- Offers grid -->
         <div
             v-if="offers.data && offers.data.length > 0"
-            class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"
+            class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
         >
             <Link
                 v-for="offer in offers.data"
                 :key="offer.id"
                 :href="route('app.offers.edit', offer.id)"
-                class="group rounded-xl bg-white/[0.04] border border-white/[0.08] p-5 hover:border-cyan-500/30 transition-all duration-300 block"
+                class="group rounded-2xl bg-white shadow-sm border border-gray-100 p-6 hover:shadow-md transition-all duration-300 block relative overflow-hidden ring-1 ring-black/5"
             >
-                <div class="flex items-start justify-between mb-3">
+                <div class="flex items-start justify-between mb-4">
                     <span
                         :class="[
                             typeColorMap[offer.type_color] || typeColorMap.blue,
-                            'inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border',
+                            'inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold border',
                         ]"
                     >
                         {{ offer.type_label }}
                     </span>
 
-                    <div class="flex items-center gap-2">
+                    <div class="flex items-center gap-1">
                         <button
                             v-if="offer.is_published"
                             @click.prevent="copyLink(offer.slug)"
-                            class="opacity-0 group-hover:opacity-100 p-1.5 rounded-md hover:bg-white/[0.08] text-gray-400 hover:text-cyan-400 transition-all"
+                            class="opacity-0 group-hover:opacity-100 p-2 rounded-lg hover:bg-gray-50 text-gray-400 hover:text-[#00D261] transition-all"
                             title="Copy public link"
                         >
                             <svg
@@ -151,7 +155,7 @@ const viewPage = (slug) => {
                         <button
                             v-if="offer.is_published"
                             @click.prevent="viewPage(offer.slug)"
-                            class="opacity-0 group-hover:opacity-100 p-1.5 rounded-md hover:bg-white/[0.08] text-gray-400 hover:text-cyan-400 transition-all"
+                            class="opacity-0 group-hover:opacity-100 p-2 rounded-lg hover:bg-gray-50 text-gray-400 hover:text-[#00D261] transition-all"
                             title="View public page"
                         >
                             <svg
@@ -170,7 +174,7 @@ const viewPage = (slug) => {
                         </button>
                         <button
                             @click.prevent="duplicateOffer(offer.id)"
-                            class="opacity-0 group-hover:opacity-100 p-1.5 rounded-md hover:bg-white/[0.08] text-gray-400 hover:text-violet-400 transition-all"
+                            class="opacity-0 group-hover:opacity-100 p-2 rounded-lg hover:bg-gray-50 text-gray-400 hover:text-blue-500 transition-all"
                             title="Duplicate offer"
                         >
                             <svg
@@ -189,39 +193,42 @@ const viewPage = (slug) => {
                         </button>
                         <span
                             :class="[
-                                'w-2 h-2 rounded-full mt-1',
+                                'w-2 h-2 rounded-full mt-1 ml-1',
                                 offer.is_published
-                                    ? 'bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.5)]'
-                                    : 'bg-gray-600',
+                                    ? 'bg-[#00D261] shadow-[0_0_8px_rgba(0,210,97,0.5)]'
+                                    : 'bg-gray-300',
                             ]"
                             :title="offer.is_published ? 'Published' : 'Draft'"
                         />
                     </div>
                 </div>
                 <h3
-                    class="text-base font-semibold text-white mb-1 group-hover:text-cyan-400 transition-colors"
+                    class="text-lg font-bold text-gray-900 mb-2 truncate group-hover:text-[#00D261] transition-colors"
                 >
                     {{ offer.title }}
                 </h3>
-                <p class="text-sm text-gray-500 mb-3">
+                <p class="text-sm font-semibold text-gray-500 mb-4">
                     {{ offer.formatted_price }}
                 </p>
                 <div
-                    class="flex items-center justify-between text-xs text-gray-500"
+                    class="flex items-center justify-between text-xs font-medium text-gray-400 pt-4 border-t border-gray-50"
                 >
-                    <span>{{ offer.paid_orders_count }} orders</span>
-                    <span>{{ offer.created_at }}</span>
+                    <span>{{ offer.paid_orders_count }} successful orders</span>
+                    <span>Created {{ offer.created_at }}</span>
                 </div>
             </Link>
         </div>
 
         <!-- Empty state -->
-        <div v-else class="text-center py-20">
+        <div
+            v-else
+            class="text-center py-20 bg-white rounded-2xl shadow-sm border border-gray-100 ring-1 ring-black/5"
+        >
             <div
-                class="w-16 h-16 mx-auto mb-4 rounded-2xl bg-gradient-to-br from-cyan-500/10 to-violet-500/10 flex items-center justify-center"
+                class="w-16 h-16 mx-auto mb-4 rounded-2xl bg-[#00D261]/10 flex items-center justify-center"
             >
                 <svg
-                    class="w-8 h-8 text-gray-600"
+                    class="w-8 h-8 text-[#00D261]"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -234,16 +241,16 @@ const viewPage = (slug) => {
                     />
                 </svg>
             </div>
-            <h3 class="text-lg font-semibold text-white mb-2">No offers yet</h3>
+            <h3 class="text-lg font-bold text-gray-900 mb-2">No offers yet</h3>
             <p class="text-sm text-gray-500 mb-6">
-                Create your first offer with AI assistance and start monetizing.
+                Create your first offer to start generating revenue.
             </p>
             <Link
                 :href="route('app.offers.create')"
-                class="inline-flex items-center gap-2 px-6 py-2.5 text-sm font-medium text-white bg-gradient-to-r from-cyan-500 to-violet-600 rounded-lg hover:from-cyan-400 hover:to-violet-500 transition-all"
+                class="inline-flex items-center gap-2 rounded-xl bg-white px-5 py-2.5 text-sm font-bold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 transition-all hover:bg-gray-50"
             >
                 <svg
-                    class="w-4 h-4"
+                    class="-ml-0.5 h-5 w-5 text-gray-400"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -258,5 +265,5 @@ const viewPage = (slug) => {
                 Create Your First Offer
             </Link>
         </div>
-    </AppLayout>
+    </AuthenticatedLayout>
 </template>

@@ -31,13 +31,13 @@ const submit = () => {
     <GuestLayout>
         <Head title="Reset Password" />
 
-        <h2 class="text-xl font-bold text-white mb-6">Reset Password</h2>
+        <h2 class="text-2xl font-extrabold tracking-tight text-gray-900 sm:text-3xl mb-6">Reset Password</h2>
 
         <form @submit.prevent="submit" class="space-y-4">
             <div>
                 <label
                     for="email"
-                    class="block text-xs font-medium text-gray-400 mb-1.5"
+                    class="block text-xs font-medium text-gray-500 mb-1.5"
                     >Email</label
                 >
                 <input
@@ -47,7 +47,7 @@ const submit = () => {
                     required
                     autofocus
                     autocomplete="username"
-                    class="w-full px-4 py-2.5 bg-white/[0.06] border border-white/[0.1] rounded-lg text-white text-sm placeholder-gray-600 focus:border-cyan-500/50 focus:outline-none focus:ring-1 focus:ring-cyan-500/30 transition-colors"
+                    class="w-full px-4 py-2.5 bg-white border border-gray-200 placeholder-gray-400 rounded-lg text-gray-900 text-sm placeholder-gray-600 focus:border-[#00D261]/50 focus:outline-none focus:ring-1 focus:ring-[#00D261]/30 transition-colors"
                 />
                 <p v-if="form.errors.email" class="text-red-400 text-xs mt-1.5">
                     {{ form.errors.email }}
@@ -57,7 +57,7 @@ const submit = () => {
             <div>
                 <label
                     for="password"
-                    class="block text-xs font-medium text-gray-400 mb-1.5"
+                    class="block text-xs font-medium text-gray-500 mb-1.5"
                     >New Password</label
                 >
                 <input
@@ -66,7 +66,7 @@ const submit = () => {
                     v-model="form.password"
                     required
                     autocomplete="new-password"
-                    class="w-full px-4 py-2.5 bg-white/[0.06] border border-white/[0.1] rounded-lg text-white text-sm placeholder-gray-600 focus:border-cyan-500/50 focus:outline-none focus:ring-1 focus:ring-cyan-500/30 transition-colors"
+                    class="w-full px-4 py-2.5 bg-white border border-gray-200 placeholder-gray-400 rounded-lg text-gray-900 text-sm placeholder-gray-600 focus:border-[#00D261]/50 focus:outline-none focus:ring-1 focus:ring-[#00D261]/30 transition-colors"
                     placeholder="••••••••"
                 />
                 <p
@@ -80,7 +80,7 @@ const submit = () => {
             <div>
                 <label
                     for="password_confirmation"
-                    class="block text-xs font-medium text-gray-400 mb-1.5"
+                    class="block text-xs font-medium text-gray-500 mb-1.5"
                     >Confirm Password</label
                 >
                 <input
@@ -89,7 +89,7 @@ const submit = () => {
                     v-model="form.password_confirmation"
                     required
                     autocomplete="new-password"
-                    class="w-full px-4 py-2.5 bg-white/[0.06] border border-white/[0.1] rounded-lg text-white text-sm placeholder-gray-600 focus:border-cyan-500/50 focus:outline-none focus:ring-1 focus:ring-cyan-500/30 transition-colors"
+                    class="w-full px-4 py-2.5 bg-white border border-gray-200 placeholder-gray-400 rounded-lg text-gray-900 text-sm placeholder-gray-600 focus:border-[#00D261]/50 focus:outline-none focus:ring-1 focus:ring-[#00D261]/30 transition-colors"
                     placeholder="••••••••"
                 />
                 <p
@@ -104,7 +104,7 @@ const submit = () => {
                 <button
                     type="submit"
                     :disabled="form.processing"
-                    class="w-full py-2.5 text-sm font-bold text-white bg-gradient-to-r from-cyan-500 to-violet-600 rounded-lg hover:from-cyan-400 hover:to-violet-500 transition-all shadow-lg shadow-cyan-500/20 disabled:opacity-50"
+                    class="w-full py-2.5 text-sm font-bold text-white bg-gradient-to-r from-[#25f47b] to-[#00D261] rounded-lg hover:scale-105 transition-all shadow-lg shadow-[#25f47b]/30 disabled:opacity-50"
                 >
                     {{ form.processing ? "Resetting..." : "Reset Password" }}
                 </button>

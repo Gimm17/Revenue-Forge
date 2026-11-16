@@ -64,7 +64,7 @@ const features = [
                 <div class="text-center max-w-4xl mx-auto">
                     <!-- Badge -->
                     <div
-                        class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-xs font-medium mb-6"
+                        class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-[#00D261] text-xs font-medium mb-6"
                     >
                         <span
                             class="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse"
@@ -73,7 +73,7 @@ const features = [
                     </div>
 
                     <h1
-                        class="text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-tight mb-6"
+                        class="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 leading-tight mb-6"
                     >
                         Turn Your Ideas Into
                         <span
@@ -84,7 +84,7 @@ const features = [
                     </h1>
 
                     <p
-                        class="text-lg sm:text-xl text-gray-400 max-w-2xl mx-auto mb-10 leading-relaxed"
+                        class="text-lg sm:text-xl text-gray-500 max-w-2xl mx-auto mb-10 leading-relaxed"
                     >
                         Generate offers with AI, accept payments through Mayar,
                         automate access delivery, and track everything from one
@@ -94,44 +94,69 @@ const features = [
                     <div
                         class="flex flex-col sm:flex-row items-center justify-center gap-4"
                     >
-                        <Link
-                            href="/register"
-                            class="w-full sm:w-auto inline-flex items-center justify-center px-8 py-3.5 text-base font-semibold text-white bg-gradient-to-r from-cyan-500 to-violet-600 rounded-xl hover:from-cyan-400 hover:to-violet-500 transition-all shadow-xl shadow-cyan-500/25 hover:shadow-cyan-500/40"
-                        >
-                            Start Building Free
-                            <svg
-                                class="w-5 h-5 ml-2"
-                                fill="none"
-                                stroke="currentColor"
-                                viewBox="0 0 24 24"
+                        <template v-if="$page.props.auth?.user">
+                            <Link
+                                href="/app"
+                                class="w-full sm:w-auto inline-flex items-center justify-center px-8 py-3.5 text-base font-semibold text-white bg-gradient-to-r from-[#25f47b] to-[#00D261] rounded-xl hover:scale-105 transition-all shadow-xl shadow-[#25f47b]/30 hover:shadow-[#25f47b]/40"
                             >
-                                <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    stroke-width="2"
-                                    d="M13 7l5 5m0 0l-5 5m5-5H6"
-                                />
-                            </svg>
-                        </Link>
-                        <Link
-                            href="/pricing"
-                            class="w-full sm:w-auto inline-flex items-center justify-center px-8 py-3.5 text-base font-medium text-gray-300 border border-white/10 rounded-xl hover:bg-white/[0.06] transition-all"
-                        >
-                            View Pricing
-                        </Link>
+                                Go to Dashboard
+                                <svg
+                                    class="w-5 h-5 ml-2"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                >
+                                    <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="2"
+                                        d="M13 7l5 5m0 0l-5 5m5-5H6"
+                                    />
+                                </svg>
+                            </Link>
+                        </template>
+                        <template v-else>
+                            <Link
+                                href="/register"
+                                class="w-full sm:w-auto inline-flex items-center justify-center px-8 py-3.5 text-base font-semibold text-white bg-gradient-to-r from-[#25f47b] to-[#00D261] rounded-xl hover:scale-105 transition-all shadow-xl shadow-[#25f47b]/30 hover:shadow-[#25f47b]/40"
+                            >
+                                Start Building Free
+                                <svg
+                                    class="w-5 h-5 ml-2"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                >
+                                    <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="2"
+                                        d="M13 7l5 5m0 0l-5 5m5-5H6"
+                                    />
+                                </svg>
+                            </Link>
+                            <Link
+                                href="/pricing"
+                                class="w-full sm:w-auto inline-flex items-center justify-center px-8 py-3.5 text-base font-medium text-gray-900 border border-white/10 rounded-xl hover:bg-gray-50 transition-all"
+                            >
+                                View Pricing
+                            </Link>
+                        </template>
                     </div>
                 </div>
             </div>
         </section>
 
         <!-- Features Section -->
-        <section id="features" class="py-24 border-t border-white/[0.06]">
+        <section id="features" class="py-24 border-t border-gray-100">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center mb-16">
-                    <h2 class="text-3xl sm:text-4xl font-bold text-white mb-4">
+                    <h2
+                        class="text-3xl sm:text-5xl font-extrabold tracking-tight text-gray-900 sm:text-6xl mb-4"
+                    >
                         Everything You Need to Monetize
                     </h2>
-                    <p class="text-lg text-gray-400 max-w-2xl mx-auto">
+                    <p class="text-lg text-gray-500 max-w-2xl mx-auto">
                         From AI-powered offer creation to automated payment
                         processing, RevenueForge handles the entire revenue
                         lifecycle.
@@ -144,7 +169,7 @@ const features = [
                     <div
                         v-for="feature in features"
                         :key="feature.title"
-                        class="group relative rounded-2xl bg-gradient-to-br from-white/[0.06] to-white/[0.02] border border-white/[0.08] p-6 hover:border-cyan-500/30 transition-all duration-300"
+                        class="group relative rounded-2xl bg-gradient-to-br from-white/[0.06] to-white/[0.02] border border-gray-100 p-6 hover:border-cyan-500/30 transition-all duration-300"
                     >
                         <div
                             class="absolute inset-0 rounded-2xl bg-gradient-to-br from-cyan-500/5 to-violet-500/5 opacity-0 group-hover:opacity-100 transition-opacity"
@@ -156,7 +181,7 @@ const features = [
                             >
                                 <svg
                                     v-if="feature.icon === 'sparkles'"
-                                    class="w-5 h-5 text-cyan-400"
+                                    class="w-5 h-5 text-[#00D261]"
                                     fill="none"
                                     stroke="currentColor"
                                     viewBox="0 0 24 24"
@@ -170,7 +195,7 @@ const features = [
                                 </svg>
                                 <svg
                                     v-else-if="feature.icon === 'credit-card'"
-                                    class="w-5 h-5 text-cyan-400"
+                                    class="w-5 h-5 text-[#00D261]"
                                     fill="none"
                                     stroke="currentColor"
                                     viewBox="0 0 24 24"
@@ -184,7 +209,7 @@ const features = [
                                 </svg>
                                 <svg
                                     v-else-if="feature.icon === 'zap'"
-                                    class="w-5 h-5 text-cyan-400"
+                                    class="w-5 h-5 text-[#00D261]"
                                     fill="none"
                                     stroke="currentColor"
                                     viewBox="0 0 24 24"
@@ -198,7 +223,7 @@ const features = [
                                 </svg>
                                 <svg
                                     v-else-if="feature.icon === 'chart'"
-                                    class="w-5 h-5 text-cyan-400"
+                                    class="w-5 h-5 text-[#00D261]"
                                     fill="none"
                                     stroke="currentColor"
                                     viewBox="0 0 24 24"
@@ -212,7 +237,7 @@ const features = [
                                 </svg>
                                 <svg
                                     v-else-if="feature.icon === 'users'"
-                                    class="w-5 h-5 text-cyan-400"
+                                    class="w-5 h-5 text-[#00D261]"
                                     fill="none"
                                     stroke="currentColor"
                                     viewBox="0 0 24 24"
@@ -226,7 +251,7 @@ const features = [
                                 </svg>
                                 <svg
                                     v-else-if="feature.icon === 'link'"
-                                    class="w-5 h-5 text-cyan-400"
+                                    class="w-5 h-5 text-[#00D261]"
                                     fill="none"
                                     stroke="currentColor"
                                     viewBox="0 0 24 24"
@@ -240,10 +265,12 @@ const features = [
                                 </svg>
                             </div>
 
-                            <h3 class="text-lg font-semibold text-white mb-2">
+                            <h3
+                                class="text-lg font-semibold text-gray-900 mb-2"
+                            >
                                 {{ feature.title }}
                             </h3>
-                            <p class="text-sm text-gray-400 leading-relaxed">
+                            <p class="text-sm text-gray-500 leading-relaxed">
                                 {{ feature.description }}
                             </p>
                         </div>
@@ -253,34 +280,59 @@ const features = [
         </section>
 
         <!-- CTA Section -->
-        <section class="py-24 border-t border-white/[0.06]">
+        <section class="py-24 border-t border-gray-100">
             <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-                <h2 class="text-3xl sm:text-4xl font-bold text-white mb-4">
+                <h2
+                    class="text-3xl sm:text-5xl font-extrabold tracking-tight text-gray-900 sm:text-6xl mb-4"
+                >
                     Ready to Forge Your Revenue?
                 </h2>
-                <p class="text-lg text-gray-400 mb-8">
+                <p class="text-lg text-gray-500 mb-8">
                     Start creating AI-powered offers and accept payments in
                     minutes. No complex setup required.
                 </p>
-                <Link
-                    href="/register"
-                    class="inline-flex items-center px-8 py-3.5 text-base font-semibold text-white bg-gradient-to-r from-cyan-500 to-violet-600 rounded-xl hover:from-cyan-400 hover:to-violet-500 transition-all shadow-xl shadow-cyan-500/25"
-                >
-                    Get Started Now
-                    <svg
-                        class="w-5 h-5 ml-2"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
+                <template v-if="$page.props.auth?.user">
+                    <Link
+                        href="/app"
+                        class="inline-flex items-center px-8 py-3.5 text-base font-semibold text-white bg-gradient-to-r from-[#25f47b] to-[#00D261] rounded-xl hover:scale-105 transition-all shadow-xl shadow-[#25f47b]/30"
                     >
-                        <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            stroke-width="2"
-                            d="M13 7l5 5m0 0l-5 5m5-5H6"
-                        />
-                    </svg>
-                </Link>
+                        Go to Dashboard
+                        <svg
+                            class="w-5 h-5 ml-2"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M13 7l5 5m0 0l-5 5m5-5H6"
+                            />
+                        </svg>
+                    </Link>
+                </template>
+                <template v-else>
+                    <Link
+                        href="/register"
+                        class="inline-flex items-center px-8 py-3.5 text-base font-semibold text-white bg-gradient-to-r from-[#25f47b] to-[#00D261] rounded-xl hover:scale-105 transition-all shadow-xl shadow-[#25f47b]/30"
+                    >
+                        Get Started Now
+                        <svg
+                            class="w-5 h-5 ml-2"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M13 7l5 5m0 0l-5 5m5-5H6"
+                            />
+                        </svg>
+                    </Link>
+                </template>
             </div>
         </section>
     </PublicLayout>

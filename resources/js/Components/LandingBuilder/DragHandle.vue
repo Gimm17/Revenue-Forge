@@ -29,10 +29,10 @@ const typeIcons = {
     >
         <!-- Drag Handle + Label -->
         <div
-            class="flex items-center gap-1.5 px-2 py-1 rounded-lg bg-gray-900/90 border border-white/10 shadow-lg cursor-grab active:cursor-grabbing"
+            class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white border border-gray-100 shadow-md cursor-grab active:cursor-grabbing hover:shadow-lg transition-all"
         >
             <svg
-                class="w-3.5 h-3.5 text-gray-400"
+                class="w-4 h-4 text-gray-400"
                 fill="currentColor"
                 viewBox="0 0 16 16"
             >
@@ -44,18 +44,19 @@ const typeIcons = {
                 <circle cx="11" cy="13" r="1.5" />
             </svg>
             <span class="text-xs">{{ typeIcons[section.type] }}</span>
-            <span class="text-[10px] text-gray-400 uppercase font-medium">{{
-                section.type
-            }}</span>
+            <span
+                class="text-[10px] text-gray-500 uppercase font-bold tracking-wider"
+                >{{ section.type }}</span
+            >
         </div>
 
         <!-- Actions -->
         <div
-            class="flex items-center gap-1 px-1 py-1 rounded-lg bg-gray-900/90 border border-white/10 shadow-lg"
+            class="flex items-center gap-1 px-1.5 py-1.5 rounded-xl bg-white border border-gray-100 shadow-md"
         >
             <button
                 @click.stop="emit('edit')"
-                class="p-1.5 text-gray-400 hover:text-cyan-400 hover:bg-white/10 rounded transition-colors"
+                class="p-1.5 text-gray-500 hover:text-[#00D261] hover:bg-gray-50 rounded-lg transition-colors"
                 title="Edit Section"
             >
                 <svg
@@ -74,7 +75,7 @@ const typeIcons = {
             </button>
             <button
                 @click.stop="emit('delete')"
-                class="p-1.5 text-gray-400 hover:text-red-400 hover:bg-white/10 rounded transition-colors"
+                class="p-1.5 text-gray-500 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors"
                 title="Delete Section"
             >
                 <svg

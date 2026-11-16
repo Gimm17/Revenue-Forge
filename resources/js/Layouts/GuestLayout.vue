@@ -4,7 +4,7 @@ import { Link } from "@inertiajs/vue3";
 
 <template>
     <div
-        class="flex min-h-screen flex-col items-center justify-center bg-gray-950 px-4"
+        class="flex min-h-screen flex-col items-center justify-center bg-white px-4"
     >
         <!-- Background effects -->
         <div class="absolute inset-0 overflow-hidden pointer-events-none">
@@ -18,16 +18,16 @@ import { Link } from "@inertiajs/vue3";
 
         <!-- Card (with logo inside) -->
         <div
-            class="relative w-full max-w-md overflow-hidden rounded-2xl bg-white/[0.04] border border-white/[0.08] px-8 py-8 shadow-2xl backdrop-blur-sm"
+            class="relative w-full max-w-md overflow-hidden rounded-2xl bg-white border border-gray-100 shadow-xl ring-1 ring-black/5 px-8 py-8 shadow-2xl backdrop-blur-sm"
         >
             <!-- Logo inside card -->
             <div class="flex items-center justify-center gap-2 mb-8">
                 <Link href="/" class="flex items-center gap-2 group">
                     <div
-                        class="w-10 h-10 rounded-xl bg-gradient-to-br from-cyan-500 to-violet-600 flex items-center justify-center shadow-lg shadow-cyan-500/20 group-hover:shadow-cyan-500/40 transition-shadow"
+                        class="w-10 h-10 rounded-xl bg-gradient-to-br from-[#25f47b] to-[#00D261] flex items-center justify-center shadow-lg shadow-[#25f47b]/30 group-hover:shadow-[#25f47b]/40 transition-shadow"
                     >
                         <svg
-                            class="w-5 h-5 text-white"
+                            class="w-5 h-5 text-gray-900"
                             fill="none"
                             stroke="currentColor"
                             viewBox="0 0 24 24"
@@ -40,7 +40,7 @@ import { Link } from "@inertiajs/vue3";
                             />
                         </svg>
                     </div>
-                    <span class="text-xl font-bold text-white"
+                    <span class="text-2xl font-extrabold tracking-tight text-gray-900 sm:text-3xl"
                         >RevenueForge</span
                     >
                 </Link>

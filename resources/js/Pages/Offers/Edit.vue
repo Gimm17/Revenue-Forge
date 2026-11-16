@@ -1,5 +1,5 @@
 <script setup>
-import AppLayout from "@/Layouts/AppLayout.vue";
+import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import { Head, useForm, router, Link } from "@inertiajs/vue3";
 import { ref } from "vue";
 
@@ -60,12 +60,12 @@ const deleteOffer = () => {
 <template>
     <Head :title="`Edit: ${offer.title}`" />
 
-    <AppLayout>
+    <AuthenticatedLayout>
         <template #header>
             <div class="flex items-center gap-3">
                 <Link
                     href="/app/offers"
-                    class="text-gray-500 hover:text-gray-300"
+                    class="text-gray-500 hover:text-gray-900"
                 >
                     <svg
                         class="w-5 h-5"
@@ -81,7 +81,11 @@ const deleteOffer = () => {
                         />
                     </svg>
                 </Link>
-                <h1 class="text-xl font-bold text-white">Edit Offer</h1>
+                <h1
+                    class="text-2xl font-extrabold tracking-tight text-gray-900 sm:text-3xl"
+                >
+                    Edit Offer
+                </h1>
             </div>
         </template>
 
@@ -90,7 +94,7 @@ const deleteOffer = () => {
                 <button
                     v-if="offer.is_published"
                     @click.prevent="copyLink"
-                    class="p-2 text-gray-400 hover:text-cyan-400 hover:bg-white/[0.08] rounded-lg transition-colors border border-transparent hover:border-white/[0.05]"
+                    class="p-2 text-gray-500 hover:text-[#00D261] hover:bg-gray-100 rounded-lg transition-colors border border-transparent hover:border-white/[0.05]"
                     title="Copy Public Link"
                 >
                     <svg
@@ -111,7 +115,7 @@ const deleteOffer = () => {
                     v-if="offer.is_published"
                     :href="route('offer.show', offer.slug)"
                     target="_blank"
-                    class="p-2 text-gray-400 hover:text-cyan-400 hover:bg-white/[0.08] rounded-lg transition-colors border border-transparent hover:border-white/[0.05]"
+                    class="p-2 text-gray-500 hover:text-[#00D261] hover:bg-gray-100 rounded-lg transition-colors border border-transparent hover:border-white/[0.05]"
                     title="View Public Page"
                 >
                     <svg
@@ -130,17 +134,17 @@ const deleteOffer = () => {
                 </a>
                 <Link
                     :href="route('app.offers.landing-builder', offer.id)"
-                    class="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-violet-400 border border-violet-500/30 hover:bg-violet-500/10 rounded-lg transition-all"
+                    class="inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold text-white bg-gradient-to-r from-violet-500 to-fuchsia-500 hover:from-violet-600 hover:to-fuchsia-600 rounded-lg transition-all shadow-md hover:shadow-lg shadow-violet-500/20"
                 >
                     🎨 Landing Builder
                 </Link>
                 <button
                     @click="togglePublish"
                     :class="[
-                        'inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-lg transition-all',
+                        'inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold border rounded-lg transition-all shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-1',
                         offer.is_published
-                            ? 'text-amber-400 border border-amber-500/30 hover:bg-amber-500/10'
-                            : 'text-emerald-400 border border-emerald-500/30 hover:bg-emerald-500/10',
+                            ? 'text-red-700 bg-red-50 border-red-200 hover:bg-red-100 focus:ring-red-500'
+                            : 'text-[#00D261] bg-[#00D261]/10 border-[#00D261]/20 hover:bg-[#00D261]/20 hover:border-[#00D261]/40 focus:ring-[#00D261]',
                     ]"
                 >
                     {{ offer.is_published ? "Unpublish" : "Publish" }}
@@ -166,33 +170,33 @@ const deleteOffer = () => {
 
                 <!-- Basic Info card -->
                 <div
-                    class="rounded-xl bg-white/[0.04] border border-white/[0.08] p-6 space-y-4"
+                    class="rounded-xl bg-white border border-gray-100 shadow-sm ring-1 ring-black/5 p-6 space-y-4"
                 >
                     <h2
-                        class="text-sm font-semibold text-gray-300 uppercase tracking-wider"
+                        class="text-sm font-semibold text-gray-900 uppercase tracking-wider"
                     >
                         Basic Information
                     </h2>
                     <div>
                         <label
-                            class="block text-sm font-medium text-gray-400 mb-1"
+                            class="block text-sm font-medium text-gray-500 mb-1"
                             >Title</label
                         >
                         <input
                             v-model="form.title"
                             type="text"
-                            class="w-full px-4 py-2.5 bg-white/[0.06] border border-white/[0.1] rounded-lg text-white text-sm focus:border-cyan-500/50 focus:outline-none"
+                            class="w-full px-4 py-2.5 bg-white border border-gray-200 placeholder-gray-400 rounded-lg text-gray-900 text-sm focus:border-[#00D261]/50 focus:outline-none"
                         />
                     </div>
                     <div class="grid grid-cols-2 gap-4">
                         <div>
                             <label
-                                class="block text-sm font-medium text-gray-400 mb-1"
+                                class="block text-sm font-medium text-gray-500 mb-1"
                                 >Type</label
                             >
                             <select
                                 v-model="form.type"
-                                class="w-full px-4 py-2.5 bg-white/[0.06] border border-white/[0.1] rounded-lg text-white text-sm focus:border-cyan-500/50 focus:outline-none"
+                                class="w-full px-4 py-2.5 bg-white border border-gray-200 placeholder-gray-400 rounded-lg text-gray-900 text-sm focus:border-[#00D261]/50 focus:outline-none"
                             >
                                 <option
                                     v-for="t in offerTypes"
@@ -205,57 +209,57 @@ const deleteOffer = () => {
                         </div>
                         <div>
                             <label
-                                class="block text-sm font-medium text-gray-400 mb-1"
+                                class="block text-sm font-medium text-gray-500 mb-1"
                                 >Price (IDR)</label
                             >
                             <input
                                 v-model.number="form.price"
                                 type="number"
-                                class="w-full px-4 py-2.5 bg-white/[0.06] border border-white/[0.1] rounded-lg text-white text-sm focus:border-cyan-500/50 focus:outline-none"
+                                class="w-full px-4 py-2.5 bg-white border border-gray-200 placeholder-gray-400 rounded-lg text-gray-900 text-sm focus:border-[#00D261]/50 focus:outline-none"
                             />
                         </div>
                     </div>
                     <div>
                         <label
-                            class="block text-sm font-medium text-gray-400 mb-1"
+                            class="block text-sm font-medium text-gray-500 mb-1"
                             >Tagline</label
                         >
                         <input
                             v-model="form.tagline"
                             type="text"
-                            class="w-full px-4 py-2.5 bg-white/[0.06] border border-white/[0.1] rounded-lg text-white text-sm focus:border-cyan-500/50 focus:outline-none"
+                            class="w-full px-4 py-2.5 bg-white border border-gray-200 placeholder-gray-400 rounded-lg text-gray-900 text-sm focus:border-[#00D261]/50 focus:outline-none"
                         />
                     </div>
                     <div>
                         <label
-                            class="block text-sm font-medium text-gray-400 mb-1"
+                            class="block text-sm font-medium text-gray-500 mb-1"
                             >Short Pitch</label
                         >
                         <textarea
                             v-model="form.short_pitch"
                             rows="2"
-                            class="w-full px-4 py-2.5 bg-white/[0.06] border border-white/[0.1] rounded-lg text-white text-sm focus:border-cyan-500/50 focus:outline-none resize-none"
+                            class="w-full px-4 py-2.5 bg-white border border-gray-200 placeholder-gray-400 rounded-lg text-gray-900 text-sm focus:border-[#00D261]/50 focus:outline-none resize-none"
                         />
                     </div>
                     <div>
                         <label
-                            class="block text-sm font-medium text-gray-400 mb-1"
+                            class="block text-sm font-medium text-gray-500 mb-1"
                             >CTA Text</label
                         >
                         <input
                             v-model="form.cta_text"
                             type="text"
-                            class="w-full px-4 py-2.5 bg-white/[0.06] border border-white/[0.1] rounded-lg text-white text-sm focus:border-cyan-500/50 focus:outline-none"
+                            class="w-full px-4 py-2.5 bg-white border border-gray-200 placeholder-gray-400 rounded-lg text-gray-900 text-sm focus:border-[#00D261]/50 focus:outline-none"
                         />
                     </div>
                 </div>
 
                 <!-- Digital Delivery -->
                 <div
-                    class="rounded-xl bg-white/[0.04] border border-white/[0.08] p-6 space-y-4"
+                    class="rounded-xl bg-white border border-gray-100 shadow-sm ring-1 ring-black/5 p-6 space-y-4"
                 >
                     <h2
-                        class="text-sm font-semibold text-gray-300 uppercase tracking-wider"
+                        class="text-sm font-semibold text-gray-900 uppercase tracking-wider"
                     >
                         📦 Digital Delivery
                     </h2>
@@ -265,12 +269,12 @@ const deleteOffer = () => {
 
                     <div>
                         <label
-                            class="block text-sm font-medium text-gray-400 mb-1"
+                            class="block text-sm font-medium text-gray-500 mb-1"
                             >Delivery Type</label
                         >
                         <select
                             v-model="form.delivery_type"
-                            class="w-full px-4 py-2.5 bg-white/[0.06] border border-white/[0.1] rounded-lg text-white text-sm focus:border-cyan-500/50 focus:ring-1 focus:ring-cyan-500/30 focus:outline-none"
+                            class="w-full px-4 py-2.5 bg-white border border-gray-200 placeholder-gray-400 rounded-lg text-gray-900 text-sm focus:border-[#00D261]/50 focus:ring-1 focus:ring-[#00D261]/30 focus:outline-none"
                         >
                             <option value="none">No Delivery</option>
                             <option value="file_url">
@@ -288,13 +292,13 @@ const deleteOffer = () => {
                     <template v-if="form.delivery_type !== 'none'">
                         <div>
                             <label
-                                class="block text-sm font-medium text-gray-400 mb-1"
+                                class="block text-sm font-medium text-gray-500 mb-1"
                                 >Button / Section Label</label
                             >
                             <input
                                 v-model="form.delivery_label"
                                 type="text"
-                                class="w-full px-4 py-2.5 bg-white/[0.06] border border-white/[0.1] rounded-lg text-white text-sm focus:border-cyan-500/50 focus:ring-1 focus:ring-cyan-500/30 focus:outline-none"
+                                class="w-full px-4 py-2.5 bg-white border border-gray-200 placeholder-gray-400 rounded-lg text-gray-900 text-sm focus:border-[#00D261]/50 focus:ring-1 focus:ring-[#00D261]/30 focus:outline-none"
                                 :placeholder="
                                     form.delivery_type === 'file_url'
                                         ? 'Download Your Ebook'
@@ -307,7 +311,7 @@ const deleteOffer = () => {
 
                         <div>
                             <label
-                                class="block text-sm font-medium text-gray-400 mb-1"
+                                class="block text-sm font-medium text-gray-500 mb-1"
                                 >{{
                                     form.delivery_type === "file_url"
                                         ? "Download URL"
@@ -320,7 +324,7 @@ const deleteOffer = () => {
                                 v-if="form.delivery_type !== 'text_content'"
                                 v-model="form.delivery_content"
                                 type="url"
-                                class="w-full px-4 py-2.5 bg-white/[0.06] border border-white/[0.1] rounded-lg text-white text-sm focus:border-cyan-500/50 focus:ring-1 focus:ring-cyan-500/30 focus:outline-none"
+                                class="w-full px-4 py-2.5 bg-white border border-gray-200 placeholder-gray-400 rounded-lg text-gray-900 text-sm focus:border-[#00D261]/50 focus:ring-1 focus:ring-[#00D261]/30 focus:outline-none"
                                 :placeholder="
                                     form.delivery_type === 'file_url'
                                         ? 'https://drive.google.com/file/...'
@@ -331,7 +335,7 @@ const deleteOffer = () => {
                                 v-else
                                 v-model="form.delivery_content"
                                 rows="4"
-                                class="w-full px-4 py-2.5 bg-white/[0.06] border border-white/[0.1] rounded-lg text-white text-sm focus:border-cyan-500/50 focus:ring-1 focus:ring-cyan-500/30 focus:outline-none"
+                                class="w-full px-4 py-2.5 bg-white border border-gray-200 placeholder-gray-400 rounded-lg text-gray-900 text-sm focus:border-[#00D261]/50 focus:ring-1 focus:ring-[#00D261]/30 focus:outline-none"
                                 placeholder="Instructions, license keys, access details..."
                             />
                         </div>
@@ -340,18 +344,18 @@ const deleteOffer = () => {
 
                 <!-- Benefits -->
                 <div
-                    class="rounded-xl bg-white/[0.04] border border-white/[0.08] p-6 space-y-3"
+                    class="rounded-xl bg-white border border-gray-100 shadow-sm ring-1 ring-black/5 p-6 space-y-3"
                 >
                     <div class="flex items-center justify-between">
                         <h2
-                            class="text-sm font-semibold text-gray-300 uppercase tracking-wider"
+                            class="text-sm font-semibold text-gray-900 uppercase tracking-wider"
                         >
                             Benefits
                         </h2>
                         <button
                             type="button"
                             @click="addBenefit"
-                            class="text-xs text-cyan-400 hover:text-cyan-300"
+                            class="text-xs text-[#00D261] hover:text-[#00D261]"
                         >
                             + Add
                         </button>
@@ -364,7 +368,7 @@ const deleteOffer = () => {
                         <input
                             v-model="form.benefits[i]"
                             type="text"
-                            class="flex-1 px-4 py-2 bg-white/[0.06] border border-white/[0.1] rounded-lg text-white text-sm focus:border-cyan-500/50 focus:outline-none"
+                            class="flex-1 px-4 py-2 bg-white border border-gray-200 placeholder-gray-400 rounded-lg text-gray-900 text-sm focus:border-[#00D261]/50 focus:outline-none"
                         />
                         <button
                             v-if="form.benefits.length > 1"
@@ -391,18 +395,18 @@ const deleteOffer = () => {
 
                 <!-- FAQ -->
                 <div
-                    class="rounded-xl bg-white/[0.04] border border-white/[0.08] p-6 space-y-3"
+                    class="rounded-xl bg-white border border-gray-100 shadow-sm ring-1 ring-black/5 p-6 space-y-3"
                 >
                     <div class="flex items-center justify-between">
                         <h2
-                            class="text-sm font-semibold text-gray-300 uppercase tracking-wider"
+                            class="text-sm font-semibold text-gray-900 uppercase tracking-wider"
                         >
                             FAQ
                         </h2>
                         <button
                             type="button"
                             @click="addFaq"
-                            class="text-xs text-cyan-400 hover:text-cyan-300"
+                            class="text-xs text-[#00D261] hover:text-[#00D261]"
                         >
                             + Add
                         </button>
@@ -415,13 +419,13 @@ const deleteOffer = () => {
                         <input
                             v-model="form.faq[i].question"
                             type="text"
-                            class="w-full px-3 py-2 bg-white/[0.06] border border-white/[0.1] rounded-lg text-white text-sm focus:border-cyan-500/50 focus:outline-none"
+                            class="w-full px-3 py-2 bg-white border border-gray-200 placeholder-gray-400 rounded-lg text-gray-900 text-sm focus:border-[#00D261]/50 focus:outline-none"
                             placeholder="Question"
                         />
                         <textarea
                             v-model="form.faq[i].answer"
                             rows="2"
-                            class="w-full px-3 py-2 bg-white/[0.06] border border-white/[0.1] rounded-lg text-white text-sm focus:border-cyan-500/50 focus:outline-none resize-none"
+                            class="w-full px-3 py-2 bg-white border border-gray-200 placeholder-gray-400 rounded-lg text-gray-900 text-sm focus:border-[#00D261]/50 focus:outline-none resize-none"
                             placeholder="Answer"
                         />
                         <button
@@ -438,7 +442,7 @@ const deleteOffer = () => {
                 <button
                     type="submit"
                     :disabled="form.processing"
-                    class="w-full sm:w-auto inline-flex items-center justify-center px-8 py-3 text-sm font-semibold text-white bg-gradient-to-r from-cyan-500 to-violet-600 rounded-xl hover:from-cyan-400 hover:to-violet-500 transition-all shadow-lg shadow-cyan-500/20 disabled:opacity-50"
+                    class="w-full sm:w-auto inline-flex items-center justify-center px-8 py-3 text-sm font-semibold text-white bg-gradient-to-r from-[#25f47b] to-[#00D261] rounded-xl hover:scale-105 transition-all shadow-lg shadow-[#25f47b]/30 disabled:opacity-50"
                 >
                     {{ form.processing ? "Saving..." : "Save Changes" }}
                 </button>
@@ -447,10 +451,10 @@ const deleteOffer = () => {
             <!-- Version History -->
             <div
                 v-if="versions.length"
-                class="rounded-xl bg-white/[0.04] border border-white/[0.08] p-6"
+                class="rounded-xl bg-white border border-gray-100 shadow-sm ring-1 ring-black/5 p-6"
             >
                 <h2
-                    class="text-sm font-semibold text-gray-300 uppercase tracking-wider mb-3"
+                    class="text-sm font-semibold text-gray-900 uppercase tracking-wider mb-3"
                 >
                     Version History
                 </h2>
@@ -460,7 +464,7 @@ const deleteOffer = () => {
                         :key="v.id"
                         class="flex items-center justify-between px-3 py-2 rounded-lg bg-white/[0.02] text-xs"
                     >
-                        <span class="text-gray-300">v{{ v.version }}</span>
+                        <span class="text-gray-900">v{{ v.version }}</span>
                         <span class="text-gray-500">{{ v.generated_by }}</span>
                         <span class="text-gray-500">{{ v.created_at }}</span>
                     </div>
@@ -478,7 +482,7 @@ const deleteOffer = () => {
                 </h2>
                 <div class="flex items-center justify-between mt-4">
                     <div>
-                        <p class="text-sm text-white font-medium">
+                        <p class="text-sm text-gray-900 font-medium">
                             Delete Offer
                         </p>
                         <p class="text-xs text-gray-500">
@@ -496,5 +500,5 @@ const deleteOffer = () => {
                 </div>
             </div>
         </div>
-    </AppLayout>
+    </AuthenticatedLayout>
 </template>

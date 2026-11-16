@@ -1,5 +1,5 @@
 <script setup>
-import AppLayout from "@/Layouts/AppLayout.vue";
+import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import { Head } from "@inertiajs/vue3";
 import { ref } from "vue";
 
@@ -21,23 +21,23 @@ const eventColors = {
     "payment.success": "text-emerald-400",
     "payment.completed": "text-emerald-400",
     "payment.failed": "text-red-400",
-    "subscription.active": "text-cyan-400",
+    "subscription.active": "text-[#00D261]",
     "subscription.cancelled": "text-amber-400",
 };
 </script>
 
 <template>
     <Head title="Webhook Logs" />
-    <AppLayout>
+    <AuthenticatedLayout>
         <template #header>
-            <h1 class="text-xl font-bold text-white">Webhook Logs</h1>
+            <h1 class="text-2xl font-extrabold tracking-tight text-gray-900 sm:text-3xl">Webhook Logs</h1>
         </template>
 
         <div v-if="logs && logs.length > 0" class="space-y-2">
             <div
                 v-for="log in logs"
                 :key="log.id"
-                class="rounded-xl bg-white/[0.04] border border-white/[0.08] overflow-hidden hover:border-white/[0.12] transition-colors"
+                class="rounded-xl bg-white border border-gray-100 shadow-sm ring-1 ring-black/5 overflow-hidden hover:border-white/[0.12] transition-colors"
             >
                 <!-- Log Row -->
                 <div
@@ -47,7 +47,7 @@ const eventColors = {
                     <span
                         :class="[
                             'text-xs font-mono',
-                            eventColors[log.event_type] || 'text-gray-400',
+                            eventColors[log.event_type] || 'text-gray-500',
                         ]"
                     >
                         {{ log.event_type }}
@@ -56,7 +56,7 @@ const eventColors = {
                         :class="[
                             'text-[10px] font-semibold px-2 py-0.5 rounded-full',
                             statusColors[log.status] ||
-                                'bg-gray-500/20 text-gray-400',
+                                'bg-gray-500/20 text-gray-500',
                         ]"
                     >
                         {{ log.status }}
@@ -112,7 +112,7 @@ const eventColors = {
                             >
                         </div>
                         <pre
-                            class="text-xs text-gray-400 bg-black/30 rounded-lg p-4 overflow-x-auto max-h-80 font-mono leading-relaxed"
+                            class="text-xs text-gray-500 bg-black/30 rounded-lg p-4 overflow-x-auto max-h-80 font-mono leading-relaxed"
                             >{{ log.payload_preview }}</pre
                         >
                     </div>
@@ -123,15 +123,15 @@ const eventColors = {
         <!-- Empty State -->
         <div
             v-else
-            class="rounded-xl bg-white/[0.04] border border-white/[0.08] p-12 text-center"
+            class="rounded-xl bg-white border border-gray-100 shadow-sm ring-1 ring-black/5 p-12 text-center"
         >
             <div class="text-5xl mb-4">🔗</div>
-            <h3 class="text-lg font-semibold text-white mb-2">
+            <h3 class="text-lg font-semibold text-gray-900 mb-2">
                 No Webhook Logs
             </h3>
             <p class="text-sm text-gray-500">
                 Incoming webhooks from Mayar will appear here for debugging.
             </p>
         </div>
-    </AppLayout>
+    </AuthenticatedLayout>
 </template>

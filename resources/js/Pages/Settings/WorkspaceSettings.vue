@@ -1,5 +1,5 @@
 <script setup>
-import AppLayout from "@/Layouts/AppLayout.vue";
+import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import { Head, useForm } from "@inertiajs/vue3";
 import { ref, computed } from "vue";
 
@@ -56,9 +56,9 @@ const previewGradient = computed(() => {
 <template>
     <Head title="Workspace Settings" />
 
-    <AppLayout>
+    <AuthenticatedLayout>
         <template #header>
-            <h1 class="text-xl font-bold text-white">Workspace Settings</h1>
+            <h1 class="text-2xl font-extrabold tracking-tight text-gray-900 sm:text-3xl">Workspace Settings</h1>
         </template>
 
         <div class="max-w-3xl">
@@ -77,8 +77,8 @@ const previewGradient = computed(() => {
                     :class="[
                         'flex-1 px-4 py-2.5 text-sm font-medium rounded-lg transition-all',
                         activeTab === tab.id
-                            ? 'bg-white/[0.08] text-white shadow-sm'
-                            : 'text-gray-500 hover:text-gray-300',
+                            ? 'bg-gray-100 text-gray-900 shadow-sm'
+                            : 'text-gray-500 hover:text-gray-900',
                     ]"
                 >
                     {{ tab.label }}
@@ -89,21 +89,21 @@ const previewGradient = computed(() => {
                 <!-- General Tab -->
                 <div
                     v-show="activeTab === 'general'"
-                    class="rounded-xl bg-white/[0.04] border border-white/[0.08] p-6 space-y-5"
+                    class="rounded-xl bg-white border border-gray-100 shadow-sm ring-1 ring-black/5 p-6 space-y-5"
                 >
-                    <h2 class="text-lg font-semibold text-white">
+                    <h2 class="text-lg font-semibold text-gray-900">
                         General Settings
                     </h2>
 
                     <div>
                         <label
-                            class="block text-sm font-medium text-gray-300 mb-1.5"
+                            class="block text-sm font-medium text-gray-900 mb-1.5"
                             >Workspace Name</label
                         >
                         <input
                             v-model="form.name"
                             type="text"
-                            class="w-full px-4 py-2.5 bg-white/[0.06] border border-white/[0.1] rounded-lg text-white text-sm focus:border-cyan-500/50 focus:ring-1 focus:ring-cyan-500/30 focus:outline-none"
+                            class="w-full px-4 py-2.5 bg-white border border-gray-200 placeholder-gray-400 rounded-lg text-gray-900 text-sm focus:border-[#00D261]/50 focus:ring-1 focus:ring-[#00D261]/30 focus:outline-none"
                             placeholder="My Workspace"
                         />
                         <p
@@ -116,13 +116,13 @@ const previewGradient = computed(() => {
 
                     <div>
                         <label
-                            class="block text-sm font-medium text-gray-300 mb-1.5"
+                            class="block text-sm font-medium text-gray-900 mb-1.5"
                             >Workspace Slug</label
                         >
                         <input
                             v-model="form.slug"
                             type="text"
-                            class="w-full px-4 py-2.5 bg-white/[0.06] border border-white/[0.1] rounded-lg text-white text-sm focus:border-cyan-500/50 focus:ring-1 focus:ring-cyan-500/30 focus:outline-none"
+                            class="w-full px-4 py-2.5 bg-white border border-gray-200 placeholder-gray-400 rounded-lg text-gray-900 text-sm focus:border-[#00D261]/50 focus:ring-1 focus:ring-[#00D261]/30 focus:outline-none"
                             placeholder="my-workspace"
                         />
                         <p
@@ -145,7 +145,7 @@ const previewGradient = computed(() => {
                             :style="{ background: previewGradient }"
                         >
                             <span
-                                class="text-white font-bold text-lg drop-shadow-lg"
+                                class="text-gray-900 font-bold text-lg drop-shadow-lg"
                                 :style="{ fontFamily: form.font_family }"
                             >
                                 {{ form.name || "Your Brand" }}
@@ -160,9 +160,9 @@ const previewGradient = computed(() => {
 
                     <!-- Colors -->
                     <div
-                        class="rounded-xl bg-white/[0.04] border border-white/[0.08] p-6 space-y-5"
+                        class="rounded-xl bg-white border border-gray-100 shadow-sm ring-1 ring-black/5 p-6 space-y-5"
                     >
-                        <h2 class="text-lg font-semibold text-white">
+                        <h2 class="text-lg font-semibold text-gray-900">
                             🎨 Brand Colors
                         </h2>
 
@@ -170,7 +170,7 @@ const previewGradient = computed(() => {
                             <!-- Primary Color -->
                             <div>
                                 <label
-                                    class="block text-sm font-medium text-gray-300 mb-2"
+                                    class="block text-sm font-medium text-gray-900 mb-2"
                                     >Primary Color</label
                                 >
                                 <div class="flex items-center gap-3 mb-2">
@@ -182,7 +182,7 @@ const previewGradient = computed(() => {
                                     <input
                                         v-model="form.brand_color"
                                         type="text"
-                                        class="flex-1 px-4 py-2.5 bg-white/[0.06] border border-white/[0.1] rounded-lg text-white text-sm focus:border-cyan-500/50 focus:outline-none"
+                                        class="flex-1 px-4 py-2.5 bg-white border border-gray-200 placeholder-gray-400 rounded-lg text-gray-900 text-sm focus:border-[#00D261]/50 focus:outline-none"
                                     />
                                 </div>
                                 <div class="flex gap-1.5 flex-wrap">
@@ -205,7 +205,7 @@ const previewGradient = computed(() => {
                             <!-- Secondary Color -->
                             <div>
                                 <label
-                                    class="block text-sm font-medium text-gray-300 mb-2"
+                                    class="block text-sm font-medium text-gray-900 mb-2"
                                     >Secondary Color</label
                                 >
                                 <div class="flex items-center gap-3 mb-2">
@@ -217,7 +217,7 @@ const previewGradient = computed(() => {
                                     <input
                                         v-model="form.secondary_color"
                                         type="text"
-                                        class="flex-1 px-4 py-2.5 bg-white/[0.06] border border-white/[0.1] rounded-lg text-white text-sm focus:border-cyan-500/50 focus:outline-none"
+                                        class="flex-1 px-4 py-2.5 bg-white border border-gray-200 placeholder-gray-400 rounded-lg text-gray-900 text-sm focus:border-[#00D261]/50 focus:outline-none"
                                     />
                                 </div>
                                 <div class="flex gap-1.5 flex-wrap">
@@ -241,14 +241,14 @@ const previewGradient = computed(() => {
 
                     <!-- Font -->
                     <div
-                        class="rounded-xl bg-white/[0.04] border border-white/[0.08] p-6 space-y-4"
+                        class="rounded-xl bg-white border border-gray-100 shadow-sm ring-1 ring-black/5 p-6 space-y-4"
                     >
-                        <h2 class="text-lg font-semibold text-white">
+                        <h2 class="text-lg font-semibold text-gray-900">
                             ✏️ Typography
                         </h2>
                         <div>
                             <label
-                                class="block text-sm font-medium text-gray-300 mb-2"
+                                class="block text-sm font-medium text-gray-900 mb-2"
                                 >Font Family</label
                             >
                             <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
@@ -260,8 +260,8 @@ const previewGradient = computed(() => {
                                     :class="[
                                         'px-3 py-2.5 rounded-lg text-sm transition-all text-center border',
                                         form.font_family === font
-                                            ? 'bg-white/[0.08] text-white border-cyan-500/30'
-                                            : 'bg-white/[0.02] text-gray-400 border-white/[0.06] hover:bg-white/[0.06]',
+                                            ? 'bg-gray-100 text-gray-900 border-cyan-500/30'
+                                            : 'bg-white/[0.02] text-gray-500 border-white/[0.06] hover:bg-white/[0.06]',
                                     ]"
                                     :style="{ fontFamily: font }"
                                 >
@@ -275,11 +275,11 @@ const previewGradient = computed(() => {
                 <!-- Chat Tab -->
                 <div v-show="activeTab === 'chat'" class="space-y-5">
                     <div
-                        class="rounded-xl bg-white/[0.04] border border-white/[0.08] p-6 space-y-5"
+                        class="rounded-xl bg-white border border-gray-100 shadow-sm ring-1 ring-black/5 p-6 space-y-5"
                     >
                         <div class="flex items-center justify-between">
                             <div>
-                                <h2 class="text-lg font-semibold text-white">
+                                <h2 class="text-lg font-semibold text-gray-900">
                                     💬 Live Chat Widget
                                 </h2>
                                 <p class="text-xs text-gray-500 mt-1">
@@ -315,26 +315,26 @@ const previewGradient = computed(() => {
                         <template v-if="form.chat_widget_enabled">
                             <div>
                                 <label
-                                    class="block text-sm font-medium text-gray-300 mb-1.5"
+                                    class="block text-sm font-medium text-gray-900 mb-1.5"
                                     >Greeting Message</label
                                 >
                                 <input
                                     v-model="form.chat_greeting"
                                     type="text"
-                                    class="w-full px-4 py-2.5 bg-white/[0.06] border border-white/[0.1] rounded-lg text-white text-sm focus:border-cyan-500/50 focus:ring-1 focus:ring-cyan-500/30 focus:outline-none"
+                                    class="w-full px-4 py-2.5 bg-white border border-gray-200 placeholder-gray-400 rounded-lg text-gray-900 text-sm focus:border-[#00D261]/50 focus:ring-1 focus:ring-[#00D261]/30 focus:outline-none"
                                     placeholder="Hi! How can I help you?"
                                 />
                             </div>
 
                             <div>
                                 <label
-                                    class="block text-sm font-medium text-gray-300 mb-1.5"
+                                    class="block text-sm font-medium text-gray-900 mb-1.5"
                                     >Contact Email</label
                                 >
                                 <input
                                     v-model="form.chat_email"
                                     type="email"
-                                    class="w-full px-4 py-2.5 bg-white/[0.06] border border-white/[0.1] rounded-lg text-white text-sm focus:border-cyan-500/50 focus:ring-1 focus:ring-cyan-500/30 focus:outline-none"
+                                    class="w-full px-4 py-2.5 bg-white border border-gray-200 placeholder-gray-400 rounded-lg text-gray-900 text-sm focus:border-[#00D261]/50 focus:ring-1 focus:ring-[#00D261]/30 focus:outline-none"
                                     placeholder="support@yourbrand.com"
                                 />
                                 <p class="text-xs text-gray-600 mt-1">
@@ -353,7 +353,7 @@ const previewGradient = computed(() => {
                                 <div class="flex items-end justify-end">
                                     <div class="max-w-[220px]">
                                         <div
-                                            class="rounded-2xl rounded-br-sm px-4 py-3 text-sm text-white"
+                                            class="rounded-2xl rounded-br-sm px-4 py-3 text-sm text-gray-900"
                                             :style="{
                                                 background: previewGradient,
                                             }"
@@ -367,7 +367,7 @@ const previewGradient = computed(() => {
                                 </div>
                                 <div class="flex justify-end mt-3">
                                     <div
-                                        class="w-12 h-12 rounded-full flex items-center justify-center text-white text-xl shadow-lg"
+                                        class="w-12 h-12 rounded-full flex items-center justify-center text-gray-900 text-xl shadow-lg"
                                         :style="{ background: previewGradient }"
                                     >
                                         💬
@@ -383,7 +383,7 @@ const previewGradient = computed(() => {
                     <button
                         type="submit"
                         :disabled="form.processing"
-                        class="inline-flex items-center px-6 py-2.5 text-sm font-semibold text-white bg-gradient-to-r from-cyan-500 to-violet-600 rounded-lg hover:from-cyan-400 hover:to-violet-500 transition-all shadow-lg shadow-cyan-500/20 disabled:opacity-50 disabled:cursor-not-allowed"
+                        class="inline-flex items-center px-6 py-2.5 text-sm font-semibold text-white bg-gradient-to-r from-[#25f47b] to-[#00D261] rounded-lg hover:scale-105 transition-all shadow-lg shadow-[#25f47b]/30 disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                         <span v-if="form.processing">Saving...</span>
                         <span v-else>Save Settings</span>
@@ -402,5 +402,5 @@ const previewGradient = computed(() => {
                 </div>
             </form>
         </div>
-    </AppLayout>
+    </AuthenticatedLayout>
 </template>

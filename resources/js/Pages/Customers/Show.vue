@@ -1,5 +1,5 @@
 <script setup>
-import AppLayout from "@/Layouts/AppLayout.vue";
+import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import { Head, Link, useForm } from "@inertiajs/vue3";
 import { ref } from "vue";
 
@@ -26,7 +26,7 @@ const statusColor = (status) =>
         expired: "text-red-400",
         cancelled: "text-red-400",
         failed: "text-red-400",
-    })[status] || "text-gray-400";
+    })[status] || "text-gray-500";
 
 const form = useForm({});
 const isSending = ref(false);
@@ -42,12 +42,12 @@ const sendPortalLink = () => {
 
 <template>
     <Head :title="`Customer: ${customer.name}`" />
-    <AppLayout>
+    <AuthenticatedLayout>
         <template #header>
             <div class="flex items-center gap-3">
                 <Link
                     href="/app/customers"
-                    class="text-gray-500 hover:text-gray-300"
+                    class="text-gray-500 hover:text-gray-900"
                     ><svg
                         class="w-5 h-5"
                         fill="none"
@@ -61,18 +61,18 @@ const sendPortalLink = () => {
                             d="M15 19l-7-7 7-7"
                         /></svg
                 ></Link>
-                <h1 class="text-xl font-bold text-white">
+                <h1 class="text-2xl font-extrabold tracking-tight text-gray-900 sm:text-3xl">
                     {{ customer.name }}
                 </h1>
 
                 <button
                     @click="sendPortalLink"
                     :disabled="isSending"
-                    class="ml-auto inline-flex items-center gap-2 px-4 py-2 bg-white/[0.05] hover:bg-white/[0.1] text-white text-sm font-medium rounded-lg transition-colors border border-white/[0.1] disabled:opacity-50"
+                    class="ml-auto inline-flex items-center gap-2 px-4 py-2 bg-white/[0.05] hover:bg-white/[0.1] text-gray-900 text-sm font-medium rounded-lg transition-colors border border-white/[0.1] disabled:opacity-50"
                 >
                     <svg
                         v-if="isSending"
-                        class="animate-spin w-4 h-4 text-white"
+                        class="animate-spin w-4 h-4 text-gray-900"
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
                         viewBox="0 0 24 24"
@@ -113,38 +113,38 @@ const sendPortalLink = () => {
         <!-- Info cards -->
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
             <div
-                class="rounded-xl bg-white/[0.04] border border-white/[0.08] p-4"
+                class="rounded-xl bg-white border border-gray-100 shadow-sm ring-1 ring-black/5 p-4"
             >
                 <p class="text-xs text-gray-500 uppercase mb-1">Email</p>
-                <p class="text-sm text-white">{{ customer.email }}</p>
+                <p class="text-sm text-gray-900">{{ customer.email }}</p>
             </div>
             <div
-                class="rounded-xl bg-white/[0.04] border border-white/[0.08] p-4"
+                class="rounded-xl bg-white border border-gray-100 shadow-sm ring-1 ring-black/5 p-4"
             >
                 <p class="text-xs text-gray-500 uppercase mb-1">
                     Credit Balance
                 </p>
-                <p class="text-lg font-bold text-cyan-400">
+                <p class="text-lg font-bold text-[#00D261]">
                     {{ creditBalance }}
                 </p>
             </div>
             <div
-                class="rounded-xl bg-white/[0.04] border border-white/[0.08] p-4"
+                class="rounded-xl bg-white border border-gray-100 shadow-sm ring-1 ring-black/5 p-4"
             >
                 <p class="text-xs text-gray-500 uppercase mb-1">
                     Customer Since
                 </p>
-                <p class="text-sm text-white">{{ customer.created_at }}</p>
+                <p class="text-sm text-gray-900">{{ customer.created_at }}</p>
             </div>
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <!-- Orders -->
             <div
-                class="rounded-xl bg-white/[0.04] border border-white/[0.08] overflow-hidden"
+                class="rounded-xl bg-white border border-gray-100 shadow-sm ring-1 ring-black/5 overflow-hidden"
             >
                 <div class="px-5 py-4 border-b border-white/[0.06]">
-                    <h2 class="text-sm font-semibold text-white">Orders</h2>
+                    <h2 class="text-sm font-semibold text-gray-900">Orders</h2>
                 </div>
                 <div v-if="orders.length">
                     <div
@@ -161,7 +161,7 @@ const sendPortalLink = () => {
                             </p>
                         </div>
                         <div class="text-right">
-                            <p class="text-sm font-medium text-white">
+                            <p class="text-sm font-medium text-gray-900">
                                 {{ formatCurrency(o.amount) }}
                             </p>
                             <p
@@ -181,10 +181,10 @@ const sendPortalLink = () => {
             <!-- Access & Subscriptions -->
             <div class="space-y-6">
                 <div
-                    class="rounded-xl bg-white/[0.04] border border-white/[0.08] overflow-hidden"
+                    class="rounded-xl bg-white border border-gray-100 shadow-sm ring-1 ring-black/5 overflow-hidden"
                 >
                     <div class="px-5 py-4 border-b border-white/[0.06]">
-                        <h2 class="text-sm font-semibold text-white">Access</h2>
+                        <h2 class="text-sm font-semibold text-gray-900">Access</h2>
                     </div>
                     <div v-if="access.length">
                         <div
@@ -212,10 +212,10 @@ const sendPortalLink = () => {
                 </div>
 
                 <div
-                    class="rounded-xl bg-white/[0.04] border border-white/[0.08] overflow-hidden"
+                    class="rounded-xl bg-white border border-gray-100 shadow-sm ring-1 ring-black/5 overflow-hidden"
                 >
                     <div class="px-5 py-4 border-b border-white/[0.06]">
-                        <h2 class="text-sm font-semibold text-white">
+                        <h2 class="text-sm font-semibold text-gray-900">
                             Subscriptions
                         </h2>
                     </div>
@@ -250,5 +250,5 @@ const sendPortalLink = () => {
                 </div>
             </div>
         </div>
-    </AppLayout>
+    </AuthenticatedLayout>
 </template>

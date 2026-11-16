@@ -1,5 +1,5 @@
 <script setup>
-import AppLayout from "@/Layouts/AppLayout.vue";
+import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import { Head, Link, useForm } from "@inertiajs/vue3";
 import { ref } from "vue";
 
@@ -36,12 +36,12 @@ const formatCurrency = (amount) =>
 
 <template>
     <Head :title="`${program.name} - Affiliates`" />
-    <AppLayout>
+    <AuthenticatedLayout>
         <template #header>
             <div class="flex items-center gap-3">
                 <Link
                     :href="route('app.affiliates.index')"
-                    class="text-gray-500 hover:text-gray-300 transition-colors"
+                    class="text-gray-500 hover:text-gray-900 transition-colors"
                 >
                     <svg
                         class="w-5 h-5"
@@ -57,12 +57,12 @@ const formatCurrency = (amount) =>
                         />
                     </svg>
                 </Link>
-                <h1 class="text-xl font-bold text-white">{{ program.name }}</h1>
+                <h1 class="text-2xl font-extrabold tracking-tight text-gray-900 sm:text-3xl">{{ program.name }}</h1>
                 <span
                     :class="[
                         program.is_active
                             ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20'
-                            : 'bg-gray-500/10 text-gray-400 border-gray-500/20',
+                            : 'bg-gray-500/10 text-gray-500 border-gray-500/20',
                         'text-xs px-2 py-0.5 rounded-full border hidden sm:inline-flex',
                     ]"
                 >
@@ -74,7 +74,7 @@ const formatCurrency = (amount) =>
         <template #actions>
             <button
                 @click="showCreateLink = !showCreateLink"
-                class="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-gradient-to-r from-cyan-500 to-violet-600 rounded-lg hover:from-cyan-400 hover:to-violet-500 transition-all shadow-lg shadow-cyan-500/20"
+                class="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-gradient-to-r from-[#25f47b] to-[#00D261] rounded-lg hover:scale-105 transition-all shadow-lg shadow-[#25f47b]/30"
             >
                 <svg
                     class="w-4 h-4"
@@ -96,14 +96,14 @@ const formatCurrency = (amount) =>
         <!-- Stats Overview -->
         <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
             <div
-                class="rounded-xl bg-white/[0.04] border border-white/[0.08] p-5"
+                class="rounded-xl bg-white border border-gray-100 shadow-sm ring-1 ring-black/5 p-5"
             >
                 <p
                     class="text-xs font-semibold text-gray-500 mb-1 uppercase tracking-wider"
                 >
                     Commission
                 </p>
-                <p class="text-2xl font-bold text-white">
+                <p class="text-2xl font-bold text-gray-900">
                     {{ program.commission_value
                     }}{{
                         program.commission_type === "percentage" ? "%" : " IDR"
@@ -111,26 +111,26 @@ const formatCurrency = (amount) =>
                 </p>
             </div>
             <div
-                class="rounded-xl bg-white/[0.04] border border-white/[0.08] p-5"
+                class="rounded-xl bg-white border border-gray-100 shadow-sm ring-1 ring-black/5 p-5"
             >
                 <p
                     class="text-xs font-semibold text-gray-500 mb-1 uppercase tracking-wider"
                 >
                     Total Links
                 </p>
-                <p class="text-2xl font-bold text-white">
+                <p class="text-2xl font-bold text-gray-900">
                     {{ program.links_count }}
                 </p>
             </div>
             <div
-                class="rounded-xl bg-white/[0.04] border border-white/[0.08] p-5"
+                class="rounded-xl bg-white border border-gray-100 shadow-sm ring-1 ring-black/5 p-5"
             >
                 <p
                     class="text-xs font-semibold text-gray-500 mb-1 uppercase tracking-wider"
                 >
                     Total Clicks
                 </p>
-                <p class="text-2xl font-bold text-white">
+                <p class="text-2xl font-bold text-gray-900">
                     {{
                         program.links.reduce(
                             (sum, link) => sum + link.clicks_count,
@@ -140,7 +140,7 @@ const formatCurrency = (amount) =>
                 </p>
             </div>
             <div
-                class="rounded-xl bg-white/[0.04] border border-white/[0.08] p-5"
+                class="rounded-xl bg-white border border-gray-100 shadow-sm ring-1 ring-black/5 p-5"
             >
                 <p
                     class="text-xs font-semibold text-gray-500 mb-1 uppercase tracking-wider"
@@ -169,9 +169,9 @@ const formatCurrency = (amount) =>
         >
             <div
                 v-if="showCreateLink"
-                class="mb-6 rounded-xl bg-gradient-to-br from-cyan-500/[0.06] to-violet-500/[0.06] border border-cyan-500/20 p-6"
+                class="mb-6 rounded-xl bg-gradient-to-br from-[#25f47b]/5 to-[#00D261]/5 border border-[#00D261]/20 shadow-sm p-6"
             >
-                <h2 class="text-sm font-semibold text-white mb-4">
+                <h2 class="text-sm font-semibold text-gray-900 mb-4">
                     Generate Affiliate Link
                 </h2>
                 <form
@@ -179,36 +179,36 @@ const formatCurrency = (amount) =>
                     class="grid grid-cols-1 sm:grid-cols-3 gap-4"
                 >
                     <div>
-                        <label class="block text-xs text-gray-400 mb-1"
+                        <label class="block text-xs text-gray-500 mb-1"
                             >Affiliate Name</label
                         >
                         <input
                             v-model="form.name"
                             type="text"
                             required
-                            class="w-full px-3 py-2 bg-white/[0.06] border border-white/[0.1] rounded-lg text-white text-sm focus:border-cyan-500/50 focus:outline-none"
+                            class="w-full px-3 py-2 bg-white border border-gray-200 placeholder-gray-400 rounded-lg text-gray-900 text-sm focus:border-[#00D261]/50 focus:outline-none"
                             placeholder="John Doe"
                         />
                     </div>
                     <div>
-                        <label class="block text-xs text-gray-400 mb-1"
+                        <label class="block text-xs text-gray-500 mb-1"
                             >Affiliate Email</label
                         >
                         <input
                             v-model="form.email"
                             type="email"
                             required
-                            class="w-full px-3 py-2 bg-white/[0.06] border border-white/[0.1] rounded-lg text-white text-sm focus:border-cyan-500/50 focus:outline-none"
+                            class="w-full px-3 py-2 bg-white border border-gray-200 placeholder-gray-400 rounded-lg text-gray-900 text-sm focus:border-[#00D261]/50 focus:outline-none"
                             placeholder="john@example.com"
                         />
                     </div>
                     <div>
-                        <label class="block text-xs text-gray-400 mb-1"
+                        <label class="block text-xs text-gray-500 mb-1"
                             >Target Offer (Optional)</label
                         >
                         <select
                             v-model="form.offer_id"
-                            class="w-full px-3 py-2 bg-white/[0.06] border border-white/[0.1] rounded-lg text-white text-sm focus:border-cyan-500/50 focus:outline-none"
+                            class="w-full px-3 py-2 bg-white border border-gray-200 placeholder-gray-400 rounded-lg text-gray-900 text-sm focus:border-[#00D261]/50 focus:outline-none"
                         >
                             <option value="">All Offers (Storefront)</option>
                             <option
@@ -224,7 +224,7 @@ const formatCurrency = (amount) =>
                         <button
                             type="submit"
                             :disabled="form.processing"
-                            class="px-6 py-2 text-sm font-semibold text-white bg-gradient-to-r from-cyan-500 to-violet-600 rounded-lg hover:from-cyan-400 hover:to-violet-500 transition-all disabled:opacity-50"
+                            class="px-6 py-2 text-sm font-semibold text-white bg-gradient-to-r from-[#25f47b] to-[#00D261] rounded-lg hover:scale-105 transition-all disabled:opacity-50"
                         >
                             {{
                                 form.processing
@@ -248,32 +248,32 @@ const formatCurrency = (amount) =>
                             class="bg-white/[0.02] border-b border-white/[0.05]"
                         >
                             <th
-                                class="p-4 text-xs font-semibold text-gray-400 uppercase tracking-wider"
+                                class="p-4 text-xs font-semibold text-gray-500 uppercase tracking-wider"
                             >
                                 Affiliate
                             </th>
                             <th
-                                class="p-4 text-xs font-semibold text-gray-400 uppercase tracking-wider"
+                                class="p-4 text-xs font-semibold text-gray-500 uppercase tracking-wider"
                             >
                                 Target
                             </th>
                             <th
-                                class="p-4 text-xs font-semibold text-gray-400 uppercase tracking-wider"
+                                class="p-4 text-xs font-semibold text-gray-500 uppercase tracking-wider"
                             >
                                 Link Code
                             </th>
                             <th
-                                class="p-4 text-xs font-semibold text-gray-400 uppercase tracking-wider text-right"
+                                class="p-4 text-xs font-semibold text-gray-500 uppercase tracking-wider text-right"
                             >
                                 Clicks / Conv.
                             </th>
                             <th
-                                class="p-4 text-xs font-semibold text-gray-400 uppercase tracking-wider text-right"
+                                class="p-4 text-xs font-semibold text-gray-500 uppercase tracking-wider text-right"
                             >
                                 Revenue
                             </th>
                             <th
-                                class="p-4 text-xs font-semibold text-gray-400 uppercase tracking-wider text-right"
+                                class="p-4 text-xs font-semibold text-gray-500 uppercase tracking-wider text-right"
                             >
                                 Actions
                             </th>
@@ -295,7 +295,7 @@ const formatCurrency = (amount) =>
                             class="hover:bg-white/[0.02] transition-colors"
                         >
                             <td class="p-4">
-                                <p class="text-sm font-medium text-white">
+                                <p class="text-sm font-medium text-gray-900">
                                     {{ link.affiliate_name }}
                                 </p>
                                 <p class="text-xs text-gray-500">
@@ -304,20 +304,20 @@ const formatCurrency = (amount) =>
                             </td>
                             <td class="p-4">
                                 <span
-                                    class="inline-flex items-center px-2 py-1 rounded text-xs font-medium bg-white/[0.05] text-cyan-300"
+                                    class="inline-flex items-center px-2 py-1 rounded text-xs font-medium bg-white/[0.05] text-[#00D261]"
                                 >
                                     {{ link.offer_title }}
                                 </span>
                             </td>
                             <td class="p-4">
                                 <code
-                                    class="text-xs text-gray-400 bg-black/50 px-2 py-1 rounded"
+                                    class="text-xs text-gray-500 bg-black/50 px-2 py-1 rounded"
                                     >{{ link.code }}</code
                                 >
                             </td>
                             <td class="p-4 text-right">
                                 <div class="text-sm">
-                                    <span class="text-white">{{
+                                    <span class="text-gray-900">{{
                                         link.clicks_count
                                     }}</span>
                                     <span class="text-gray-600 mx-1">/</span>
@@ -327,14 +327,14 @@ const formatCurrency = (amount) =>
                                 </div>
                             </td>
                             <td
-                                class="p-4 text-right text-sm font-medium text-white"
+                                class="p-4 text-right text-sm font-medium text-gray-900"
                             >
                                 {{ formatCurrency(link.revenue) }}
                             </td>
                             <td class="p-4 text-right">
                                 <button
                                     @click="copyLink(link.url)"
-                                    class="p-1.5 text-gray-400 hover:text-cyan-400 hover:bg-white/[0.08] rounded transition-colors"
+                                    class="p-1.5 text-gray-500 hover:text-[#00D261] hover:bg-gray-100 rounded transition-colors"
                                     title="Copy Link"
                                 >
                                     <svg
@@ -357,5 +357,5 @@ const formatCurrency = (amount) =>
                 </table>
             </div>
         </div>
-    </AppLayout>
+    </AuthenticatedLayout>
 </template>

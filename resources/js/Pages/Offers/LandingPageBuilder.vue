@@ -1,5 +1,5 @@
 <script setup>
-import AppLayout from "@/Layouts/AppLayout.vue";
+import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import { Head, useForm, Link } from "@inertiajs/vue3";
 import { ref, computed } from "vue";
 import SectionPalette from "@/Components/LandingBuilder/SectionPalette.vue";
@@ -131,12 +131,12 @@ const showSeo = ref(false);
 <template>
     <Head :title="`Landing Builder: ${offer.title}`" />
 
-    <AppLayout>
+    <AuthenticatedLayout>
         <template #header>
             <div class="flex items-center gap-3">
                 <Link
                     :href="route('app.offers.edit', offer.id)"
-                    class="text-gray-500 hover:text-gray-300"
+                    class="text-gray-500 hover:text-gray-900"
                 >
                     <svg
                         class="w-5 h-5"
@@ -152,7 +152,9 @@ const showSeo = ref(false);
                         />
                     </svg>
                 </Link>
-                <h1 class="text-xl font-bold text-white">
+                <h1
+                    class="text-2xl font-extrabold tracking-tight text-gray-900 sm:text-3xl"
+                >
                     🎨 Landing Page Builder
                 </h1>
                 <span class="text-xs text-gray-500">{{ offer.title }}</span>
@@ -165,7 +167,7 @@ const showSeo = ref(false);
                     v-if="offer.is_published"
                     :href="route('offer.show', offer.slug)"
                     target="_blank"
-                    class="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-medium text-gray-400 hover:text-cyan-400 border border-white/[0.06] rounded-lg hover:bg-white/[0.04] transition-all"
+                    class="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-medium text-gray-600 hover:text-[#00D261] border border-gray-200 rounded-lg hover:bg-gray-50 transition-all bg-white"
                 >
                     <svg
                         class="w-3.5 h-3.5"
@@ -185,7 +187,7 @@ const showSeo = ref(false);
                 <button
                     @click="save"
                     :disabled="form.processing"
-                    class="inline-flex items-center gap-2 px-5 py-2 text-sm font-semibold text-white bg-gradient-to-r from-cyan-500 to-violet-600 rounded-xl hover:from-cyan-400 hover:to-violet-500 transition-all shadow-lg shadow-cyan-500/20 disabled:opacity-50"
+                    class="inline-flex items-center gap-2 px-5 py-2 text-sm font-semibold text-white bg-gradient-to-r from-[#25f47b] to-[#00D261] rounded-xl hover:scale-105 transition-all shadow-lg shadow-[#25f47b]/30 disabled:opacity-50"
                 >
                     <svg
                         v-if="!form.processing && !saveSuccess"
@@ -239,7 +241,7 @@ const showSeo = ref(false);
                 <div>
                     <button
                         @click="showSeo = !showSeo"
-                        class="w-full flex items-center justify-between px-1 py-2 text-xs font-semibold text-gray-400 uppercase tracking-wider"
+                        class="w-full flex items-center justify-between px-1 py-2 text-xs font-semibold text-gray-500 uppercase tracking-wider hover:text-gray-900 transition-colors"
                     >
                         SEO Settings
                         <svg
@@ -259,22 +261,26 @@ const showSeo = ref(false);
                     </button>
                     <div v-if="showSeo" class="space-y-3 mt-2">
                         <div>
-                            <label class="block text-[10px] text-gray-500 mb-1"
+                            <label
+                                class="block text-[10px] uppercase font-semibold text-gray-500 mb-1"
                                 >Meta Title</label
                             >
                             <input
                                 v-model="form.meta_title"
-                                class="w-full px-2 py-1.5 bg-white/[0.06] border border-white/[0.1] rounded text-white text-xs focus:border-cyan-500/50 focus:outline-none"
+                                class="w-full px-3 py-2 bg-white border border-gray-200 placeholder-gray-400 rounded-lg text-gray-900 text-sm focus:border-[#00D261]/50 focus:ring-2 focus:ring-[#00D261]/20 focus:outline-none transition-all"
+                                placeholder="..."
                             />
                         </div>
                         <div>
-                            <label class="block text-[10px] text-gray-500 mb-1"
+                            <label
+                                class="block text-[10px] uppercase font-semibold text-gray-500 mb-1"
                                 >Meta Description</label
                             >
                             <textarea
                                 v-model="form.meta_description"
                                 rows="3"
-                                class="w-full px-2 py-1.5 bg-white/[0.06] border border-white/[0.1] rounded text-white text-xs focus:border-cyan-500/50 focus:outline-none resize-none"
+                                class="w-full px-3 py-2 bg-white border border-gray-200 placeholder-gray-400 rounded-lg text-gray-900 text-sm focus:border-[#00D261]/50 focus:ring-2 focus:ring-[#00D261]/20 focus:outline-none transition-all resize-none"
+                                placeholder="..."
                             />
                         </div>
                     </div>
@@ -289,7 +295,7 @@ const showSeo = ref(false);
                     class="flex flex-col items-center justify-center py-24 text-center"
                 >
                     <div class="text-5xl mb-4">🎨</div>
-                    <h3 class="text-lg font-semibold text-white mb-2">
+                    <h3 class="text-lg font-semibold text-gray-900 mb-2">
                         Start Building Your Page
                     </h3>
                     <p class="text-sm text-gray-500 max-w-md">
@@ -299,15 +305,15 @@ const showSeo = ref(false);
                 </div>
 
                 <!-- Sections list -->
-                <div v-else class="space-y-1 pb-20">
+                <div v-else class="space-y-2 pb-20">
                     <div
                         v-for="(section, index) in sortedSections"
                         :key="section.id"
-                        class="relative group rounded-xl border-2 transition-all"
+                        class="relative group rounded-2xl border-2 transition-all"
                         :class="[
                             dropIndex === index
-                                ? 'border-cyan-500/50 bg-cyan-500/5'
-                                : 'border-transparent hover:border-white/[0.1]',
+                                ? 'border-[#00D261]/50 bg-[#00D261]/5'
+                                : 'border-transparent hover:border-gray-200',
                             dragIndex === index ? 'opacity-40' : '',
                         ]"
                         draggable="true"
@@ -340,5 +346,5 @@ const showSeo = ref(false);
             @update="updateSection"
             @close="showEditor = false"
         />
-    </AppLayout>
+    </AuthenticatedLayout>
 </template>

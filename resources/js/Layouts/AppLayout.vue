@@ -162,7 +162,7 @@ onUnmounted(() => {
 </script>
 
 <template>
-    <div class="min-h-screen bg-[#0f1117]">
+    <div class="dashboard-root min-h-screen bg-[#0f1117]">
         <!-- Mobile sidebar backdrop -->
         <div
             v-if="sidebarOpen"
@@ -629,3 +629,12 @@ onUnmounted(() => {
         </div>
     </div>
 </template>
+
+<style>
+@import url('https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap');
+
+.dashboard-root,
+.dashboard-root * {
+    font-family: 'Figtree', sans-serif;
+}
+</style>

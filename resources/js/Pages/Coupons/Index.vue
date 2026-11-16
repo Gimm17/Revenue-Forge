@@ -1,5 +1,5 @@
 <script setup>
-import AppLayout from "@/Layouts/AppLayout.vue";
+import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import { Head, useForm, router } from "@inertiajs/vue3";
 import { ref } from "vue";
 
@@ -59,7 +59,7 @@ const statusColors = {
 
 <template>
     <Head title="Coupons" />
-    <AppLayout>
+    <AuthenticatedLayout>
         <template #header>
             <h1 class="text-xl font-bold text-white">Coupons & Discounts</h1>
         </template>
@@ -376,5 +376,5 @@ const statusColors = {
                 + Create First Coupon
             </button>
         </div>
-    </AppLayout>
+    </AuthenticatedLayout>
 </template>

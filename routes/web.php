@@ -28,7 +28,7 @@ use App\Http\Controllers\App\LandingPageBuilderController;
 use App\Http\Controllers\App\WorkspaceSettingsController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Public\CheckoutResultController;
-use App\Http\Controllers\Public\OfferCheckoutController;
+use App\Http\Controllers\Public\MidtransCheckoutController;
 use App\Http\Controllers\Public\PublicLandingController;
 use App\Http\Controllers\Public\PublicOfferController;
 use App\Http\Controllers\Public\DemoCheckoutController;
@@ -46,7 +46,7 @@ Route::get('/pricing', PricingController::class)->name('pricing');
 
 // Public Offer & Checkout
 Route::get('/o/{slug}', PublicOfferController::class)->name('offer.show');
-Route::post('/o/{slug}/checkout', OfferCheckoutController::class)->middleware('throttle:checkout')->name('offer.checkout');
+Route::post('/o/{slug}/checkout', MidtransCheckoutController::class)->middleware('throttle:checkout')->name('offer.checkout');
 Route::get('/checkout/success', [CheckoutResultController::class, 'success'])->name('checkout.success');
 Route::get('/checkout/cancel', [CheckoutResultController::class, 'cancel'])->name('checkout.cancel');
 
@@ -105,6 +105,7 @@ Route::middleware(['auth', 'verified', 'resolve.workspace'])
 
         // Notifications
         Route::get('/notifications', [NotificationController::class, 'index'])->name('notifications.index');
+        Route::get('/notifications/fetch', [NotificationController::class, 'fetch'])->name('notifications.fetch');
         Route::post('/notifications/{notification}/read', [NotificationController::class, 'markRead'])->name('notifications.read');
         Route::post('/notifications/read-all', [NotificationController::class, 'markAllRead'])->name('notifications.read-all');
 

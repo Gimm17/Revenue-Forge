@@ -1,5 +1,5 @@
 <script setup>
-import AppLayout from "@/Layouts/AppLayout.vue";
+import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import { Head } from "@inertiajs/vue3";
 
 const props = defineProps({ orders: Object, stats: Object });
@@ -16,39 +16,39 @@ const statusColor = (status) =>
         paid: "bg-emerald-500/10 text-emerald-400 border-emerald-500/20",
         pending: "bg-amber-500/10 text-amber-400 border-amber-500/20",
         failed: "bg-red-500/10 text-red-400 border-red-500/20",
-        draft: "bg-gray-500/10 text-gray-400 border-gray-500/20",
-    })[status] || "bg-gray-500/10 text-gray-400 border-gray-500/20";
+        draft: "bg-gray-500/10 text-gray-500 border-gray-500/20",
+    })[status] || "bg-gray-500/10 text-gray-500 border-gray-500/20";
 </script>
 
 <template>
     <Head title="Billing" />
-    <AppLayout>
+    <AuthenticatedLayout>
         <template #header>
-            <h1 class="text-xl font-bold text-white">Billing & Orders</h1>
+            <h1 class="text-2xl font-extrabold tracking-tight text-gray-900 sm:text-3xl">Billing & Orders</h1>
         </template>
 
         <!-- Stats -->
         <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
             <div
-                class="rounded-xl bg-white/[0.04] border border-white/[0.08] p-4"
+                class="rounded-xl bg-white border border-gray-100 shadow-sm ring-1 ring-black/5 p-4"
             >
                 <p class="text-xs text-gray-500 uppercase mb-1">
                     Total Revenue
                 </p>
-                <p class="text-xl font-bold text-cyan-400">
+                <p class="text-xl font-bold text-[#00D261]">
                     {{ formatCurrency(stats.total_revenue) }}
                 </p>
             </div>
             <div
-                class="rounded-xl bg-white/[0.04] border border-white/[0.08] p-4"
+                class="rounded-xl bg-white border border-gray-100 shadow-sm ring-1 ring-black/5 p-4"
             >
                 <p class="text-xs text-gray-500 uppercase mb-1">Total Orders</p>
-                <p class="text-xl font-bold text-white">
+                <p class="text-2xl font-extrabold tracking-tight text-gray-900 sm:text-3xl">
                     {{ stats.total_orders }}
                 </p>
             </div>
             <div
-                class="rounded-xl bg-white/[0.04] border border-white/[0.08] p-4"
+                class="rounded-xl bg-white border border-gray-100 shadow-sm ring-1 ring-black/5 p-4"
             >
                 <p class="text-xs text-gray-500 uppercase mb-1">Paid</p>
                 <p class="text-xl font-bold text-emerald-400">
@@ -56,7 +56,7 @@ const statusColor = (status) =>
                 </p>
             </div>
             <div
-                class="rounded-xl bg-white/[0.04] border border-white/[0.08] p-4"
+                class="rounded-xl bg-white border border-gray-100 shadow-sm ring-1 ring-black/5 p-4"
             >
                 <p class="text-xs text-gray-500 uppercase mb-1">Pending</p>
                 <p class="text-xl font-bold text-amber-400">
@@ -68,7 +68,7 @@ const statusColor = (status) =>
         <!-- Orders Table -->
         <div
             v-if="orders.data && orders.data.length > 0"
-            class="rounded-xl bg-white/[0.04] border border-white/[0.08] overflow-hidden"
+            class="rounded-xl bg-white border border-gray-100 shadow-sm ring-1 ring-black/5 overflow-hidden"
         >
             <table class="w-full">
                 <thead>
@@ -111,11 +111,11 @@ const statusColor = (status) =>
                         :key="order.id"
                         class="border-b border-white/[0.04] hover:bg-white/[0.02]"
                     >
-                        <td class="px-5 py-3 text-sm text-white font-medium">
+                        <td class="px-5 py-3 text-sm text-gray-900 font-medium">
                             {{ order.offer_title }}
                         </td>
                         <td class="px-5 py-3 hidden sm:table-cell">
-                            <p class="text-sm text-gray-300">
+                            <p class="text-sm text-gray-900">
                                 {{ order.customer_name }}
                             </p>
                             <p class="text-xs text-gray-500">
@@ -136,8 +136,8 @@ const statusColor = (status) =>
                             class="px-5 py-3 text-sm text-right font-medium"
                             :class="
                                 order.status === 'paid'
-                                    ? 'text-cyan-400'
-                                    : 'text-gray-400'
+                                    ? 'text-[#00D261]'
+                                    : 'text-gray-500'
                             "
                         >
                             {{ order.formatted_amount }}
@@ -171,10 +171,10 @@ const statusColor = (status) =>
                     d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"
                 />
             </svg>
-            <h3 class="text-lg font-semibold text-white mb-2">No orders yet</h3>
+            <h3 class="text-lg font-semibold text-gray-900 mb-2">No orders yet</h3>
             <p class="text-sm text-gray-500">
                 Orders will appear here after your first sale.
             </p>
         </div>
-    </AppLayout>
+    </AuthenticatedLayout>
 </template>

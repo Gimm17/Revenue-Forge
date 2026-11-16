@@ -11,20 +11,20 @@ watch(sidebarOpen, (open) => {
 </script>
 
 <template>
-    <div class="min-h-screen bg-[#0a0b10]">
+    <div class="min-h-screen bg-white">
         <!-- Navigation -->
         <nav
-            class="fixed top-0 inset-x-0 z-50 bg-[#0a0b10]/80 backdrop-blur-xl border-b border-white/[0.06]"
+            class="fixed top-0 inset-x-0 z-50 bg-white/80 backdrop-blur-xl border-b border-gray-100"
         >
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="flex items-center justify-between h-16">
                     <!-- Logo -->
                     <Link href="/" class="flex items-center gap-3">
                         <div
-                            class="w-8 h-8 rounded-lg bg-gradient-to-br from-cyan-400 to-violet-500 flex items-center justify-center"
+                            class="w-8 h-8 rounded-lg bg-gradient-to-br from-[#25f47b] to-[#00D261] flex items-center justify-center"
                         >
                             <svg
-                                class="w-5 h-5 text-white"
+                                class="w-5 h-5 text-gray-900"
                                 fill="none"
                                 stroke="currentColor"
                                 viewBox="0 0 24 24"
@@ -38,7 +38,7 @@ watch(sidebarOpen, (open) => {
                             </svg>
                         </div>
                         <span
-                            class="text-lg font-bold text-white tracking-tight"
+                            class="text-lg font-bold text-gray-900 tracking-tight"
                             >RevenueForge</span
                         >
                     </Link>
@@ -47,35 +47,45 @@ watch(sidebarOpen, (open) => {
                     <div class="hidden md:flex items-center gap-6">
                         <Link
                             href="/#features"
-                            class="text-sm text-gray-400 hover:text-white transition-colors"
+                            class="text-sm text-gray-500 hover:text-gray-900 transition-colors"
                             >Features</Link
                         >
                         <Link
                             href="/pricing"
-                            class="text-sm text-gray-400 hover:text-white transition-colors"
+                            class="text-sm text-gray-500 hover:text-gray-900 transition-colors"
                             >Pricing</Link
                         >
                     </div>
 
                     <!-- Desktop CTA -->
                     <div class="hidden sm:flex items-center gap-3">
-                        <Link
-                            href="/login"
-                            class="text-sm text-gray-300 hover:text-white transition-colors px-4 py-2"
-                        >
-                            Sign In
-                        </Link>
-                        <Link
-                            href="/register"
-                            class="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-gradient-to-r from-cyan-500 to-violet-600 rounded-lg hover:from-cyan-400 hover:to-violet-500 transition-all shadow-lg shadow-cyan-500/20"
-                        >
-                            Get Started
-                        </Link>
+                        <template v-if="$page.props.auth?.user">
+                            <Link
+                                href="/app"
+                                class="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-gradient-to-r from-[#25f47b] to-[#00D261] rounded-lg hover:scale-105 transition-all shadow-lg shadow-[#25f47b]/30"
+                            >
+                                Dashboard
+                            </Link>
+                        </template>
+                        <template v-else>
+                            <Link
+                                href="/login"
+                                class="text-sm text-gray-900 hover:text-gray-900 transition-colors px-4 py-2"
+                            >
+                                Sign In
+                            </Link>
+                            <Link
+                                href="/register"
+                                class="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-gradient-to-r from-[#25f47b] to-[#00D261] rounded-lg hover:scale-105 transition-all shadow-lg shadow-[#25f47b]/30"
+                            >
+                                Get Started
+                            </Link>
+                        </template>
                     </div>
 
                     <!-- Mobile hamburger button -->
                     <button
-                        class="sm:hidden flex items-center justify-center w-10 h-10 rounded-lg text-gray-400 hover:text-white hover:bg-white/[0.06] transition-all"
+                        class="sm:hidden flex items-center justify-center w-10 h-10 rounded-lg text-gray-500 hover:text-gray-900 hover:bg-gray-50 transition-all"
                         @click="sidebarOpen = true"
                         aria-label="Open menu"
                     >
@@ -124,11 +134,11 @@ watch(sidebarOpen, (open) => {
         >
             <div
                 v-if="sidebarOpen"
-                class="fixed top-0 right-0 bottom-0 z-[70] w-72 bg-[#0d0e14] border-l border-white/[0.08] shadow-2xl sm:hidden flex flex-col"
+                class="fixed top-0 right-0 bottom-0 z-[70] w-72 bg-white border-l border-gray-100 shadow-2xl sm:hidden flex flex-col"
             >
                 <!-- Sidebar Header -->
                 <div
-                    class="flex items-center justify-between h-16 px-5 border-b border-white/[0.06]"
+                    class="flex items-center justify-between h-16 px-5 border-b border-gray-100"
                 >
                     <Link
                         href="/"
@@ -136,10 +146,10 @@ watch(sidebarOpen, (open) => {
                         @click="sidebarOpen = false"
                     >
                         <div
-                            class="w-7 h-7 rounded-lg bg-gradient-to-br from-cyan-400 to-violet-500 flex items-center justify-center"
+                            class="w-7 h-7 rounded-lg bg-gradient-to-br from-[#25f47b] to-[#00D261] flex items-center justify-center"
                         >
                             <svg
-                                class="w-4 h-4 text-white"
+                                class="w-4 h-4 text-gray-900"
                                 fill="none"
                                 stroke="currentColor"
                                 viewBox="0 0 24 24"
@@ -152,12 +162,12 @@ watch(sidebarOpen, (open) => {
                                 />
                             </svg>
                         </div>
-                        <span class="text-base font-bold text-white"
+                        <span class="text-base font-bold text-gray-900"
                             >RevenueForge</span
                         >
                     </Link>
                     <button
-                        class="w-8 h-8 flex items-center justify-center rounded-lg text-gray-400 hover:text-white hover:bg-white/[0.06] transition-all"
+                        class="w-8 h-8 flex items-center justify-center rounded-lg text-gray-500 hover:text-gray-900 hover:bg-gray-50 transition-all"
                         @click="sidebarOpen = false"
                         aria-label="Close menu"
                     >
@@ -181,7 +191,7 @@ watch(sidebarOpen, (open) => {
                 <div class="flex-1 px-4 py-4 space-y-1 overflow-y-auto">
                     <Link
                         href="/#features"
-                        class="flex items-center gap-3 px-3 py-3 text-sm text-gray-300 hover:text-white hover:bg-white/[0.06] rounded-lg transition-colors"
+                        class="flex items-center gap-3 px-3 py-3 text-sm text-gray-900 hover:text-gray-900 hover:bg-gray-50 rounded-lg transition-colors"
                         @click="sidebarOpen = false"
                     >
                         <svg
@@ -201,7 +211,7 @@ watch(sidebarOpen, (open) => {
                     </Link>
                     <Link
                         href="/pricing"
-                        class="flex items-center gap-3 px-3 py-3 text-sm text-gray-300 hover:text-white hover:bg-white/[0.06] rounded-lg transition-colors"
+                        class="flex items-center gap-3 px-3 py-3 text-sm text-gray-900 hover:text-gray-900 hover:bg-gray-50 rounded-lg transition-colors"
                         @click="sidebarOpen = false"
                     >
                         <svg
@@ -222,21 +232,32 @@ watch(sidebarOpen, (open) => {
                 </div>
 
                 <!-- Sidebar Bottom -->
-                <div class="px-4 py-4 border-t border-white/[0.06] space-y-2">
-                    <Link
-                        href="/login"
-                        class="flex items-center justify-center w-full px-4 py-2.5 text-sm text-gray-300 hover:text-white border border-white/[0.1] rounded-lg hover:bg-white/[0.06] transition-all"
-                        @click="sidebarOpen = false"
-                    >
-                        Sign In
-                    </Link>
-                    <Link
-                        href="/register"
-                        class="flex items-center justify-center w-full px-4 py-2.5 text-sm font-medium text-white bg-gradient-to-r from-cyan-500 to-violet-600 rounded-lg hover:from-cyan-400 hover:to-violet-500 transition-all shadow-lg shadow-cyan-500/20"
-                        @click="sidebarOpen = false"
-                    >
-                        Get Started
-                    </Link>
+                <div class="px-4 py-4 border-t border-gray-100 space-y-2">
+                    <template v-if="$page.props.auth?.user">
+                        <Link
+                            href="/app"
+                            class="flex items-center justify-center w-full px-4 py-2.5 text-sm font-medium text-white bg-gradient-to-r from-[#25f47b] to-[#00D261] rounded-lg hover:scale-105 transition-all shadow-lg shadow-[#25f47b]/30"
+                            @click="sidebarOpen = false"
+                        >
+                            Dashboard
+                        </Link>
+                    </template>
+                    <template v-else>
+                        <Link
+                            href="/login"
+                            class="flex items-center justify-center w-full px-4 py-2.5 text-sm text-gray-900 hover:text-gray-900 border border-gray-200 rounded-lg hover:bg-gray-50 transition-all"
+                            @click="sidebarOpen = false"
+                        >
+                            Sign In
+                        </Link>
+                        <Link
+                            href="/register"
+                            class="flex items-center justify-center w-full px-4 py-2.5 text-sm font-medium text-white bg-gradient-to-r from-[#25f47b] to-[#00D261] rounded-lg hover:scale-105 transition-all shadow-lg shadow-[#25f47b]/30"
+                            @click="sidebarOpen = false"
+                        >
+                            Get Started
+                        </Link>
+                    </template>
                 </div>
             </div>
         </transition>
@@ -247,17 +268,17 @@ watch(sidebarOpen, (open) => {
         </main>
 
         <!-- Footer -->
-        <footer class="border-t border-white/[0.06] bg-[#0a0b10]">
+        <footer class="border-t border-gray-100 bg-white">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
                 <div
                     class="flex flex-col md:flex-row items-center justify-between gap-4"
                 >
                     <div class="flex items-center gap-2">
                         <div
-                            class="w-6 h-6 rounded-md bg-gradient-to-br from-cyan-400 to-violet-500 flex items-center justify-center"
+                            class="w-6 h-6 rounded-md bg-gradient-to-br from-[#25f47b] to-[#00D261] flex items-center justify-center"
                         >
                             <svg
-                                class="w-4 h-4 text-white"
+                                class="w-4 h-4 text-gray-900"
                                 fill="none"
                                 stroke="currentColor"
                                 viewBox="0 0 24 24"
@@ -270,7 +291,7 @@ watch(sidebarOpen, (open) => {
                                 />
                             </svg>
                         </div>
-                        <span class="text-sm font-semibold text-white"
+                        <span class="text-sm font-semibold text-gray-900"
                             >RevenueForge</span
                         >
                     </div>

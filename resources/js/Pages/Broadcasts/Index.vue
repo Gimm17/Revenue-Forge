@@ -1,5 +1,5 @@
 <script setup>
-import AppLayout from "@/Layouts/AppLayout.vue";
+import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import { Head, useForm, router } from "@inertiajs/vue3";
 import { ref } from "vue";
 
@@ -33,7 +33,7 @@ const deleteBroadcast = (id) => {
 };
 
 const statusColors = {
-    Draft: "bg-gray-500/20 text-gray-400",
+    Draft: "bg-gray-500/20 text-gray-500",
     Sending: "bg-amber-500/20 text-amber-400",
     Sent: "bg-emerald-500/20 text-emerald-400",
 };
@@ -41,15 +41,15 @@ const statusColors = {
 
 <template>
     <Head title="Email Broadcasts" />
-    <AppLayout>
+    <AuthenticatedLayout>
         <template #header>
-            <h1 class="text-xl font-bold text-white">Email Broadcasts</h1>
+            <h1 class="text-2xl font-extrabold tracking-tight text-gray-900 sm:text-3xl">Email Broadcasts</h1>
         </template>
 
         <template #actions>
             <button
                 @click="showCompose = !showCompose"
-                class="inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold text-white bg-gradient-to-r from-cyan-500 to-violet-600 rounded-lg hover:from-cyan-400 hover:to-violet-500 transition-all shadow-lg shadow-cyan-500/20"
+                class="inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold text-white bg-gradient-to-r from-[#25f47b] to-[#00D261] rounded-lg hover:scale-105 transition-all shadow-lg shadow-[#25f47b]/30"
             >
                 <span v-if="!showCompose">✉️ Compose</span>
                 <span v-else>✕ Cancel</span>
@@ -67,15 +67,15 @@ const statusColors = {
         >
             <div
                 v-if="showCompose"
-                class="rounded-xl bg-white/[0.04] border border-white/[0.08] p-6 mb-6"
+                class="rounded-xl bg-white border border-gray-100 shadow-sm ring-1 ring-black/5 p-6 mb-6"
             >
                 <div class="flex items-center justify-between mb-4">
-                    <h2 class="text-sm font-semibold text-white">
+                    <h2 class="text-sm font-semibold text-gray-900">
                         Compose Broadcast
                     </h2>
                     <span class="text-xs text-gray-500">
                         📨 Will be sent to
-                        <strong class="text-cyan-400">{{
+                        <strong class="text-[#00D261]">{{
                             customerCount
                         }}</strong>
                         customers
@@ -85,13 +85,13 @@ const statusColors = {
                 <form @submit.prevent="submit" class="space-y-4">
                     <div>
                         <label
-                            class="block text-sm font-medium text-gray-400 mb-1"
+                            class="block text-sm font-medium text-gray-500 mb-1"
                             >Subject</label
                         >
                         <input
                             v-model="form.subject"
                             type="text"
-                            class="w-full px-4 py-2.5 bg-white/[0.06] border border-white/[0.1] rounded-lg text-white text-sm focus:border-cyan-500/50 focus:outline-none"
+                            class="w-full px-4 py-2.5 bg-white border border-gray-200 placeholder-gray-400 rounded-lg text-gray-900 text-sm focus:border-[#00D261]/50 focus:outline-none"
                             placeholder="🎉 Exciting news for you!"
                         />
                         <p
@@ -104,13 +104,13 @@ const statusColors = {
 
                     <div>
                         <label
-                            class="block text-sm font-medium text-gray-400 mb-1"
+                            class="block text-sm font-medium text-gray-500 mb-1"
                             >Message Body</label
                         >
                         <textarea
                             v-model="form.body"
                             rows="8"
-                            class="w-full px-4 py-3 bg-white/[0.06] border border-white/[0.1] rounded-lg text-white text-sm focus:border-cyan-500/50 focus:outline-none resize-none"
+                            class="w-full px-4 py-3 bg-white border border-gray-200 placeholder-gray-400 rounded-lg text-gray-900 text-sm focus:border-[#00D261]/50 focus:outline-none resize-none"
                             placeholder="Write your message here..."
                         />
                         <p
@@ -125,7 +125,7 @@ const statusColors = {
                         <button
                             type="submit"
                             :disabled="form.processing || customerCount === 0"
-                            class="inline-flex items-center px-6 py-2.5 text-sm font-semibold text-white bg-gradient-to-r from-cyan-500 to-violet-600 rounded-lg hover:from-cyan-400 hover:to-violet-500 transition-all shadow-lg shadow-cyan-500/20 disabled:opacity-50"
+                            class="inline-flex items-center px-6 py-2.5 text-sm font-semibold text-white bg-gradient-to-r from-[#25f47b] to-[#00D261] rounded-lg hover:scale-105 transition-all shadow-lg shadow-[#25f47b]/30 disabled:opacity-50"
                         >
                             {{
                                 form.processing
@@ -146,10 +146,10 @@ const statusColors = {
         <!-- Broadcasts History -->
         <div
             v-if="broadcasts && broadcasts.length > 0"
-            class="rounded-xl bg-white/[0.04] border border-white/[0.08] overflow-hidden"
+            class="rounded-xl bg-white border border-gray-100 shadow-sm ring-1 ring-black/5 overflow-hidden"
         >
             <div class="px-5 py-3 border-b border-white/[0.06]">
-                <h3 class="text-sm font-semibold text-white">
+                <h3 class="text-sm font-semibold text-gray-900">
                     📧 Broadcast History
                 </h3>
             </div>
@@ -160,7 +160,7 @@ const statusColors = {
                     class="px-5 py-4 flex items-center justify-between hover:bg-white/[0.02] transition-colors"
                 >
                     <div class="flex-1 min-w-0">
-                        <p class="text-sm font-medium text-white truncate">
+                        <p class="text-sm font-medium text-gray-900 truncate">
                             {{ b.subject }}
                         </p>
                         <div class="flex items-center gap-3 mt-1">
@@ -196,10 +196,10 @@ const statusColors = {
         <!-- Empty State -->
         <div
             v-else-if="!showCompose"
-            class="rounded-xl bg-white/[0.04] border border-white/[0.08] p-12 text-center"
+            class="rounded-xl bg-white border border-gray-100 shadow-sm ring-1 ring-black/5 p-12 text-center"
         >
             <div class="text-5xl mb-4">📧</div>
-            <h3 class="text-lg font-semibold text-white mb-2">
+            <h3 class="text-lg font-semibold text-gray-900 mb-2">
                 No Broadcasts Yet
             </h3>
             <p class="text-sm text-gray-500 mb-4">
@@ -207,10 +207,10 @@ const statusColors = {
             </p>
             <button
                 @click="showCompose = true"
-                class="inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold text-white bg-gradient-to-r from-cyan-500 to-violet-600 rounded-lg"
+                class="inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold text-white bg-gradient-to-r from-[#25f47b] to-[#00D261] rounded-lg"
             >
                 ✉️ Compose First Broadcast
             </button>
         </div>
-    </AppLayout>
+    </AuthenticatedLayout>
 </template>

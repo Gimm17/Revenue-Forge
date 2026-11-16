@@ -42,19 +42,32 @@ const defaultContent = {
     hero: {
         headline: "Your Amazing Headline",
         subtitle: "A short description here",
-        cta_text: "Buy Now",
-        cta_color: "cyan",
+        cta_text: "Get Started",
+        alignment: "center",
+        background: "gradient",
     },
-    text: { body: "Write your content here..." },
+    text: {
+        body: "Write your content here...",
+        alignment: "center",
+        background: "transparent",
+    },
     benefits: {
+        background: "white",
         items: [
             { icon: "✓", text: "First benefit" },
             { icon: "✓", text: "Second benefit" },
             { icon: "✓", text: "Third benefit" },
         ],
     },
-    pricing: { price: 99000, currency: "IDR", interval: null, label: "Plan" },
+    pricing: {
+        price: 99000,
+        currency: "IDR",
+        interval: null,
+        label: "Plan",
+        background: "white",
+    },
     faq: {
+        background: "transparent",
         items: [
             {
                 question: "What is this?",
@@ -63,6 +76,7 @@ const defaultContent = {
         ],
     },
     testimonial: {
+        background: "gray",
         items: [
             {
                 name: "John Doe",
@@ -74,10 +88,11 @@ const defaultContent = {
     cta: {
         headline: "Ready to get started?",
         button_text: "Get Started",
-        button_color: "violet",
+        alignment: "center",
+        background: "gradient",
     },
-    image: { url: "", alt: "", caption: "" },
-    video: { url: "" },
+    image: { url: "", alt: "", caption: "", background: "transparent" },
+    video: { url: "", background: "transparent" },
     divider: { style: "line" },
 };
 
@@ -99,7 +114,7 @@ const addSection = (type) => {
 <template>
     <div class="space-y-2">
         <h3
-            class="text-xs font-semibold text-gray-400 uppercase tracking-wider px-1 mb-3"
+            class="text-xs font-semibold text-gray-500 uppercase tracking-wider px-1 mb-3"
         >
             Add Sections
         </h3>
@@ -109,16 +124,21 @@ const addSection = (type) => {
             @click="addSection(s.type)"
             draggable="true"
             @dragstart="onDragStart($event, s.type)"
-            class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg bg-white/[0.04] border border-white/[0.06] hover:bg-white/[0.08] hover:border-cyan-500/30 transition-all cursor-grab active:cursor-grabbing text-left group"
+            class="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl bg-white border border-gray-100 shadow-sm hover:shadow-md hover:border-[#00D261]/30 hover:bg-gray-50 transition-all cursor-grab active:cursor-grabbing text-left group"
         >
-            <span class="text-lg">{{ s.icon }}</span>
+            <span
+                class="text-xl p-2 rounded-lg bg-gray-50 group-hover:bg-white transition-colors"
+                >{{ s.icon }}</span
+            >
             <div>
                 <p
-                    class="text-sm text-white font-medium group-hover:text-cyan-400 transition-colors"
+                    class="text-sm text-gray-900 font-semibold group-hover:text-[#00D261] transition-colors"
                 >
                     {{ s.label }}
                 </p>
-                <p class="text-[10px] text-gray-500">{{ s.desc }}</p>
+                <p class="text-[11px] font-medium text-gray-500">
+                    {{ s.desc }}
+                </p>
             </div>
         </button>
     </div>

@@ -23,6 +23,8 @@ class PricingController extends Controller
                 'interval' => $plan->interval,
                 'features' => $plan->features,
                 'formatted_price' => $plan->formattedPrice(),
+                'mayar_product_id' => $plan->mayar_product_id, // checkout link dari Mayar
+                'is_free' => $plan->price === 0,
             ]);
 
         return Inertia::render('Public/Pricing', [

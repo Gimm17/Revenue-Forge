@@ -1,5 +1,5 @@
 <script setup>
-import AppLayout from "@/Layouts/AppLayout.vue";
+import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import { Head, useForm, router } from "@inertiajs/vue3";
 import { ref } from "vue";
 
@@ -95,9 +95,9 @@ const submit = () => {
 <template>
     <Head title="Create Offer" />
 
-    <AppLayout>
+    <AuthenticatedLayout>
         <template #header>
-            <h1 class="text-xl font-bold text-white">Create Offer</h1>
+            <h1 class="text-2xl font-extrabold tracking-tight text-gray-900 sm:text-3xl">Create Offer</h1>
         </template>
 
         <div class="grid grid-cols-1 lg:grid-cols-5 gap-6">
@@ -106,23 +106,23 @@ const submit = () => {
                 <form @submit.prevent="submit" class="space-y-6">
                     <!-- Basic Info -->
                     <div
-                        class="rounded-xl bg-white/[0.04] border border-white/[0.08] p-6 space-y-4"
+                        class="rounded-xl bg-white border border-gray-100 shadow-sm ring-1 ring-black/5 p-6 space-y-4"
                     >
                         <h2
-                            class="text-sm font-semibold text-gray-300 uppercase tracking-wider"
+                            class="text-sm font-semibold text-gray-900 uppercase tracking-wider"
                         >
                             Basic Information
                         </h2>
 
                         <div>
                             <label
-                                class="block text-sm font-medium text-gray-400 mb-1"
+                                class="block text-sm font-medium text-gray-500 mb-1"
                                 >Title</label
                             >
                             <input
                                 v-model="form.title"
                                 type="text"
-                                class="w-full px-4 py-2.5 bg-white/[0.06] border border-white/[0.1] rounded-lg text-white text-sm focus:border-cyan-500/50 focus:ring-1 focus:ring-cyan-500/30 focus:outline-none"
+                                class="w-full px-4 py-2.5 bg-white border border-gray-200 placeholder-gray-400 rounded-lg text-gray-900 text-sm focus:border-[#00D261]/50 focus:ring-1 focus:ring-[#00D261]/30 focus:outline-none"
                                 placeholder="e.g. Template Bundle Pro"
                             />
                             <p
@@ -136,12 +136,12 @@ const submit = () => {
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             <div>
                                 <label
-                                    class="block text-sm font-medium text-gray-400 mb-1"
+                                    class="block text-sm font-medium text-gray-500 mb-1"
                                     >Offer Type</label
                                 >
                                 <select
                                     v-model="form.type"
-                                    class="w-full px-4 py-2.5 bg-white/[0.06] border border-white/[0.1] rounded-lg text-white text-sm focus:border-cyan-500/50 focus:outline-none"
+                                    class="w-full px-4 py-2.5 bg-white border border-gray-200 placeholder-gray-400 rounded-lg text-gray-900 text-sm focus:border-[#00D261]/50 focus:outline-none"
                                 >
                                     <option
                                         v-for="t in offerTypes"
@@ -154,14 +154,14 @@ const submit = () => {
                             </div>
                             <div>
                                 <label
-                                    class="block text-sm font-medium text-gray-400 mb-1"
+                                    class="block text-sm font-medium text-gray-500 mb-1"
                                     >Price (IDR)</label
                                 >
                                 <input
                                     v-model.number="form.price"
                                     type="number"
                                     min="0"
-                                    class="w-full px-4 py-2.5 bg-white/[0.06] border border-white/[0.1] rounded-lg text-white text-sm focus:border-cyan-500/50 focus:ring-1 focus:ring-cyan-500/30 focus:outline-none"
+                                    class="w-full px-4 py-2.5 bg-white border border-gray-200 placeholder-gray-400 rounded-lg text-gray-900 text-sm focus:border-[#00D261]/50 focus:ring-1 focus:ring-[#00D261]/30 focus:outline-none"
                                 />
                             </div>
                         </div>
@@ -173,12 +173,12 @@ const submit = () => {
                             "
                         >
                             <label
-                                class="block text-sm font-medium text-gray-400 mb-1"
+                                class="block text-sm font-medium text-gray-500 mb-1"
                                 >Interval</label
                             >
                             <select
                                 v-model="form.interval"
-                                class="w-full px-4 py-2.5 bg-white/[0.06] border border-white/[0.1] rounded-lg text-white text-sm focus:border-cyan-500/50 focus:outline-none"
+                                class="w-full px-4 py-2.5 bg-white border border-gray-200 placeholder-gray-400 rounded-lg text-gray-900 text-sm focus:border-[#00D261]/50 focus:outline-none"
                             >
                                 <option value="monthly">Monthly</option>
                                 <option value="yearly">Yearly</option>
@@ -187,52 +187,52 @@ const submit = () => {
 
                         <div v-if="form.type === 'credit_pack'">
                             <label
-                                class="block text-sm font-medium text-gray-400 mb-1"
+                                class="block text-sm font-medium text-gray-500 mb-1"
                                 >Credit Amount</label
                             >
                             <input
                                 v-model.number="form.credit_amount"
                                 type="number"
                                 min="0"
-                                class="w-full px-4 py-2.5 bg-white/[0.06] border border-white/[0.1] rounded-lg text-white text-sm focus:border-cyan-500/50 focus:ring-1 focus:ring-cyan-500/30 focus:outline-none"
+                                class="w-full px-4 py-2.5 bg-white border border-gray-200 placeholder-gray-400 rounded-lg text-gray-900 text-sm focus:border-[#00D261]/50 focus:ring-1 focus:ring-[#00D261]/30 focus:outline-none"
                             />
                         </div>
 
                         <div>
                             <label
-                                class="block text-sm font-medium text-gray-400 mb-1"
+                                class="block text-sm font-medium text-gray-500 mb-1"
                                 >Tagline</label
                             >
                             <input
                                 v-model="form.tagline"
                                 type="text"
-                                class="w-full px-4 py-2.5 bg-white/[0.06] border border-white/[0.1] rounded-lg text-white text-sm focus:border-cyan-500/50 focus:ring-1 focus:ring-cyan-500/30 focus:outline-none"
+                                class="w-full px-4 py-2.5 bg-white border border-gray-200 placeholder-gray-400 rounded-lg text-gray-900 text-sm focus:border-[#00D261]/50 focus:ring-1 focus:ring-[#00D261]/30 focus:outline-none"
                                 placeholder="A punchy one-liner"
                             />
                         </div>
 
                         <div>
                             <label
-                                class="block text-sm font-medium text-gray-400 mb-1"
+                                class="block text-sm font-medium text-gray-500 mb-1"
                                 >Short Pitch</label
                             >
                             <textarea
                                 v-model="form.short_pitch"
                                 rows="2"
-                                class="w-full px-4 py-2.5 bg-white/[0.06] border border-white/[0.1] rounded-lg text-white text-sm focus:border-cyan-500/50 focus:ring-1 focus:ring-cyan-500/30 focus:outline-none resize-none"
+                                class="w-full px-4 py-2.5 bg-white border border-gray-200 placeholder-gray-400 rounded-lg text-gray-900 text-sm focus:border-[#00D261]/50 focus:ring-1 focus:ring-[#00D261]/30 focus:outline-none resize-none"
                                 placeholder="2-3 sentence elevator pitch"
                             />
                         </div>
 
                         <div>
                             <label
-                                class="block text-sm font-medium text-gray-400 mb-1"
+                                class="block text-sm font-medium text-gray-500 mb-1"
                                 >CTA Text</label
                             >
                             <input
                                 v-model="form.cta_text"
                                 type="text"
-                                class="w-full px-4 py-2.5 bg-white/[0.06] border border-white/[0.1] rounded-lg text-white text-sm focus:border-cyan-500/50 focus:ring-1 focus:ring-cyan-500/30 focus:outline-none"
+                                class="w-full px-4 py-2.5 bg-white border border-gray-200 placeholder-gray-400 rounded-lg text-gray-900 text-sm focus:border-[#00D261]/50 focus:ring-1 focus:ring-[#00D261]/30 focus:outline-none"
                                 placeholder="Buy Now"
                             />
                         </div>
@@ -240,10 +240,10 @@ const submit = () => {
 
                     <!-- Digital Delivery -->
                     <div
-                        class="rounded-xl bg-white/[0.04] border border-white/[0.08] p-6 space-y-4"
+                        class="rounded-xl bg-white border border-gray-100 shadow-sm ring-1 ring-black/5 p-6 space-y-4"
                     >
                         <h2
-                            class="text-sm font-semibold text-gray-300 uppercase tracking-wider"
+                            class="text-sm font-semibold text-gray-900 uppercase tracking-wider"
                         >
                             📦 Digital Delivery
                         </h2>
@@ -254,12 +254,12 @@ const submit = () => {
 
                         <div>
                             <label
-                                class="block text-sm font-medium text-gray-400 mb-1"
+                                class="block text-sm font-medium text-gray-500 mb-1"
                                 >Delivery Type</label
                             >
                             <select
                                 v-model="form.delivery_type"
-                                class="w-full px-4 py-2.5 bg-white/[0.06] border border-white/[0.1] rounded-lg text-white text-sm focus:border-cyan-500/50 focus:ring-1 focus:ring-cyan-500/30 focus:outline-none"
+                                class="w-full px-4 py-2.5 bg-white border border-gray-200 placeholder-gray-400 rounded-lg text-gray-900 text-sm focus:border-[#00D261]/50 focus:ring-1 focus:ring-[#00D261]/30 focus:outline-none"
                             >
                                 <option value="none">No Delivery</option>
                                 <option value="file_url">
@@ -277,13 +277,13 @@ const submit = () => {
                         <template v-if="form.delivery_type !== 'none'">
                             <div>
                                 <label
-                                    class="block text-sm font-medium text-gray-400 mb-1"
+                                    class="block text-sm font-medium text-gray-500 mb-1"
                                     >Button / Section Label</label
                                 >
                                 <input
                                     v-model="form.delivery_label"
                                     type="text"
-                                    class="w-full px-4 py-2.5 bg-white/[0.06] border border-white/[0.1] rounded-lg text-white text-sm focus:border-cyan-500/50 focus:ring-1 focus:ring-cyan-500/30 focus:outline-none"
+                                    class="w-full px-4 py-2.5 bg-white border border-gray-200 placeholder-gray-400 rounded-lg text-gray-900 text-sm focus:border-[#00D261]/50 focus:ring-1 focus:ring-[#00D261]/30 focus:outline-none"
                                     :placeholder="
                                         form.delivery_type === 'file_url'
                                             ? 'Download Your Ebook'
@@ -297,7 +297,7 @@ const submit = () => {
 
                             <div>
                                 <label
-                                    class="block text-sm font-medium text-gray-400 mb-1"
+                                    class="block text-sm font-medium text-gray-500 mb-1"
                                     >{{
                                         form.delivery_type === "file_url"
                                             ? "Download URL"
@@ -311,7 +311,7 @@ const submit = () => {
                                     v-if="form.delivery_type !== 'text_content'"
                                     v-model="form.delivery_content"
                                     type="url"
-                                    class="w-full px-4 py-2.5 bg-white/[0.06] border border-white/[0.1] rounded-lg text-white text-sm focus:border-cyan-500/50 focus:ring-1 focus:ring-cyan-500/30 focus:outline-none"
+                                    class="w-full px-4 py-2.5 bg-white border border-gray-200 placeholder-gray-400 rounded-lg text-gray-900 text-sm focus:border-[#00D261]/50 focus:ring-1 focus:ring-[#00D261]/30 focus:outline-none"
                                     :placeholder="
                                         form.delivery_type === 'file_url'
                                             ? 'https://drive.google.com/file/...'
@@ -322,7 +322,7 @@ const submit = () => {
                                     v-else
                                     v-model="form.delivery_content"
                                     rows="4"
-                                    class="w-full px-4 py-2.5 bg-white/[0.06] border border-white/[0.1] rounded-lg text-white text-sm focus:border-cyan-500/50 focus:ring-1 focus:ring-cyan-500/30 focus:outline-none"
+                                    class="w-full px-4 py-2.5 bg-white border border-gray-200 placeholder-gray-400 rounded-lg text-gray-900 text-sm focus:border-[#00D261]/50 focus:ring-1 focus:ring-[#00D261]/30 focus:outline-none"
                                     placeholder="Instructions, license keys, access details..."
                                 />
                             </div>
@@ -331,18 +331,18 @@ const submit = () => {
 
                     <!-- Benefits -->
                     <div
-                        class="rounded-xl bg-white/[0.04] border border-white/[0.08] p-6 space-y-3"
+                        class="rounded-xl bg-white border border-gray-100 shadow-sm ring-1 ring-black/5 p-6 space-y-3"
                     >
                         <div class="flex items-center justify-between">
                             <h2
-                                class="text-sm font-semibold text-gray-300 uppercase tracking-wider"
+                                class="text-sm font-semibold text-gray-900 uppercase tracking-wider"
                             >
                                 Benefits
                             </h2>
                             <button
                                 type="button"
                                 @click="addBenefit"
-                                class="text-xs text-cyan-400 hover:text-cyan-300"
+                                class="text-xs text-[#00D261] hover:text-[#00D261]"
                             >
                                 + Add
                             </button>
@@ -355,7 +355,7 @@ const submit = () => {
                             <input
                                 v-model="form.benefits[i]"
                                 type="text"
-                                class="flex-1 px-4 py-2 bg-white/[0.06] border border-white/[0.1] rounded-lg text-white text-sm focus:border-cyan-500/50 focus:outline-none"
+                                class="flex-1 px-4 py-2 bg-white border border-gray-200 placeholder-gray-400 rounded-lg text-gray-900 text-sm focus:border-[#00D261]/50 focus:outline-none"
                                 :placeholder="`Benefit ${i + 1}`"
                             />
                             <button
@@ -383,18 +383,18 @@ const submit = () => {
 
                     <!-- FAQ -->
                     <div
-                        class="rounded-xl bg-white/[0.04] border border-white/[0.08] p-6 space-y-3"
+                        class="rounded-xl bg-white border border-gray-100 shadow-sm ring-1 ring-black/5 p-6 space-y-3"
                     >
                         <div class="flex items-center justify-between">
                             <h2
-                                class="text-sm font-semibold text-gray-300 uppercase tracking-wider"
+                                class="text-sm font-semibold text-gray-900 uppercase tracking-wider"
                             >
                                 FAQ
                             </h2>
                             <button
                                 type="button"
                                 @click="addFaq"
-                                class="text-xs text-cyan-400 hover:text-cyan-300"
+                                class="text-xs text-[#00D261] hover:text-[#00D261]"
                             >
                                 + Add
                             </button>
@@ -407,13 +407,13 @@ const submit = () => {
                             <input
                                 v-model="form.faq[i].question"
                                 type="text"
-                                class="w-full px-3 py-2 bg-white/[0.06] border border-white/[0.1] rounded-lg text-white text-sm focus:border-cyan-500/50 focus:outline-none"
+                                class="w-full px-3 py-2 bg-white border border-gray-200 placeholder-gray-400 rounded-lg text-gray-900 text-sm focus:border-[#00D261]/50 focus:outline-none"
                                 placeholder="Question"
                             />
                             <textarea
                                 v-model="form.faq[i].answer"
                                 rows="2"
-                                class="w-full px-3 py-2 bg-white/[0.06] border border-white/[0.1] rounded-lg text-white text-sm focus:border-cyan-500/50 focus:outline-none resize-none"
+                                class="w-full px-3 py-2 bg-white border border-gray-200 placeholder-gray-400 rounded-lg text-gray-900 text-sm focus:border-[#00D261]/50 focus:outline-none resize-none"
                                 placeholder="Answer"
                             />
                             <button
@@ -431,7 +431,7 @@ const submit = () => {
                     <button
                         type="submit"
                         :disabled="form.processing"
-                        class="w-full sm:w-auto inline-flex items-center justify-center px-8 py-3 text-sm font-semibold text-white bg-gradient-to-r from-cyan-500 to-violet-600 rounded-xl hover:from-cyan-400 hover:to-violet-500 transition-all shadow-lg shadow-cyan-500/20 disabled:opacity-50"
+                        class="w-full sm:w-auto inline-flex items-center justify-center px-8 py-3 text-sm font-semibold text-white bg-gradient-to-r from-[#25f47b] to-[#00D261] rounded-xl hover:scale-105 transition-all shadow-lg shadow-[#25f47b]/30 disabled:opacity-50"
                     >
                         {{ form.processing ? "Saving..." : "Create Offer" }}
                     </button>
@@ -441,11 +441,11 @@ const submit = () => {
             <!-- Right: AI Generation Panel (2 cols) -->
             <div class="lg:col-span-2">
                 <div
-                    class="sticky top-24 rounded-xl bg-gradient-to-br from-cyan-500/[0.06] to-violet-500/[0.06] border border-cyan-500/20 p-6 space-y-4"
+                    class="sticky top-24 rounded-xl bg-gradient-to-br from-[#25f47b]/5 to-[#00D261]/5 border border-[#00D261]/20 shadow-sm p-6 space-y-4"
                 >
                     <div class="flex items-center gap-2 mb-2">
                         <svg
-                            class="w-5 h-5 text-cyan-400"
+                            class="w-5 h-5 text-[#00D261]"
                             fill="none"
                             stroke="currentColor"
                             viewBox="0 0 24 24"
@@ -457,7 +457,7 @@ const submit = () => {
                                 d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"
                             />
                         </svg>
-                        <h2 class="text-sm font-semibold text-white">
+                        <h2 class="text-sm font-semibold text-gray-900">
                             AI Offer Studio
                         </h2>
                     </div>
@@ -466,18 +466,18 @@ const submit = () => {
                         <input
                             v-model="aiForm.business_type"
                             type="text"
-                            class="w-full px-3 py-2 bg-white/[0.06] border border-white/[0.08] rounded-lg text-white text-xs focus:border-cyan-500/50 focus:outline-none"
+                            class="w-full px-3 py-2 bg-white border border-gray-200 placeholder-gray-400 rounded-lg text-gray-900 text-xs focus:border-[#00D261]/50 focus:outline-none"
                             placeholder="Business Type (e.g. Digital Agency)"
                         />
                         <input
                             v-model="aiForm.target_audience"
                             type="text"
-                            class="w-full px-3 py-2 bg-white/[0.06] border border-white/[0.08] rounded-lg text-white text-xs focus:border-cyan-500/50 focus:outline-none"
+                            class="w-full px-3 py-2 bg-white border border-gray-200 placeholder-gray-400 rounded-lg text-gray-900 text-xs focus:border-[#00D261]/50 focus:outline-none"
                             placeholder="Target Audience (e.g. Freelancers)"
                         />
                         <select
                             v-model="aiForm.offer_type"
-                            class="w-full px-3 py-2 bg-white/[0.06] border border-white/[0.08] rounded-lg text-white text-xs focus:border-cyan-500/50 focus:outline-none"
+                            class="w-full px-3 py-2 bg-white border border-gray-200 placeholder-gray-400 rounded-lg text-gray-900 text-xs focus:border-[#00D261]/50 focus:outline-none"
                         >
                             <option
                                 v-for="t in offerTypes"
@@ -490,19 +490,19 @@ const submit = () => {
                         <input
                             v-model="aiForm.goal"
                             type="text"
-                            class="w-full px-3 py-2 bg-white/[0.06] border border-white/[0.08] rounded-lg text-white text-xs focus:border-cyan-500/50 focus:outline-none"
+                            class="w-full px-3 py-2 bg-white border border-gray-200 placeholder-gray-400 rounded-lg text-gray-900 text-xs focus:border-[#00D261]/50 focus:outline-none"
                             placeholder="Goal (e.g. Increase monthly revenue)"
                         />
                         <input
                             v-model="aiForm.price_range"
                             type="text"
-                            class="w-full px-3 py-2 bg-white/[0.06] border border-white/[0.08] rounded-lg text-white text-xs focus:border-cyan-500/50 focus:outline-none"
+                            class="w-full px-3 py-2 bg-white border border-gray-200 placeholder-gray-400 rounded-lg text-gray-900 text-xs focus:border-[#00D261]/50 focus:outline-none"
                             placeholder="Price Range (e.g. IDR 99K - 299K)"
                         />
                         <div class="grid grid-cols-2 gap-2">
                             <select
                                 v-model="aiForm.tone"
-                                class="px-3 py-2 bg-white/[0.06] border border-white/[0.08] rounded-lg text-white text-xs focus:border-cyan-500/50 focus:outline-none"
+                                class="px-3 py-2 bg-white border border-gray-200 placeholder-gray-400 rounded-lg text-gray-900 text-xs focus:border-[#00D261]/50 focus:outline-none"
                             >
                                 <option value="professional">
                                     Professional
@@ -513,7 +513,7 @@ const submit = () => {
                             </select>
                             <select
                                 v-model="aiForm.cta_style"
-                                class="px-3 py-2 bg-white/[0.06] border border-white/[0.08] rounded-lg text-white text-xs focus:border-cyan-500/50 focus:outline-none"
+                                class="px-3 py-2 bg-white border border-gray-200 placeholder-gray-400 rounded-lg text-gray-900 text-xs focus:border-[#00D261]/50 focus:outline-none"
                             >
                                 <option value="direct">Direct</option>
                                 <option value="soft">Soft</option>
@@ -530,7 +530,7 @@ const submit = () => {
                             !aiForm.target_audience ||
                             !aiForm.goal
                         "
-                        class="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 text-sm font-semibold text-white bg-gradient-to-r from-cyan-500 to-violet-600 rounded-lg hover:from-cyan-400 hover:to-violet-500 transition-all disabled:opacity-50"
+                        class="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 text-sm font-semibold text-white bg-gradient-to-r from-[#25f47b] to-[#00D261] rounded-lg hover:scale-105 transition-all disabled:opacity-50"
                     >
                         <svg
                             v-if="generating"
@@ -574,30 +574,30 @@ const submit = () => {
                         v-if="aiResult"
                         class="mt-4 p-4 bg-white/[0.04] rounded-lg border border-white/[0.08] space-y-3"
                     >
-                        <h3 class="text-sm font-semibold text-cyan-400">
+                        <h3 class="text-sm font-semibold text-[#00D261]">
                             AI Generated
                         </h3>
-                        <div class="space-y-2 text-xs text-gray-300">
+                        <div class="space-y-2 text-xs text-gray-900">
                             <p>
-                                <strong class="text-white">Title:</strong>
+                                <strong class="text-gray-900">Title:</strong>
                                 {{ aiResult.title }}
                             </p>
                             <p>
-                                <strong class="text-white">Tagline:</strong>
+                                <strong class="text-gray-900">Tagline:</strong>
                                 {{ aiResult.tagline }}
                             </p>
                             <p>
-                                <strong class="text-white">Pitch:</strong>
+                                <strong class="text-gray-900">Pitch:</strong>
                                 {{ aiResult.short_pitch }}
                             </p>
                             <p v-if="aiResult.pricing_suggestion">
-                                <strong class="text-white">Pricing:</strong>
+                                <strong class="text-gray-900">Pricing:</strong>
                                 {{ aiResult.pricing_suggestion }}
                             </p>
                         </div>
                         <button
                             @click="applyAiResult"
-                            class="w-full px-4 py-2 text-xs font-semibold text-cyan-400 border border-cyan-500/30 rounded-lg hover:bg-cyan-500/10 transition-colors"
+                            class="w-full px-4 py-2 text-xs font-semibold text-[#00D261] border border-cyan-500/30 rounded-lg hover:bg-cyan-500/10 transition-colors"
                         >
                             Apply to Offer Form →
                         </button>
@@ -605,5 +605,5 @@ const submit = () => {
                 </div>
             </div>
         </div>
-    </AppLayout>
+    </AuthenticatedLayout>
 </template>

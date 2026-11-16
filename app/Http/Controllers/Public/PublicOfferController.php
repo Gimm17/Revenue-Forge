@@ -62,6 +62,9 @@ class PublicOfferController extends Controller
                 ->orderBy('sort_order')
                 ->limit(6)
                 ->get(['name', 'role', 'content', 'rating']),
+            // Midtrans Snap
+            'midtrans_client_key' => config('midtrans.client_key'),
+            'midtrans_snap_url'   => config('midtrans.snap_url'),
         ]);
     }
 

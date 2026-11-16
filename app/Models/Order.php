@@ -13,6 +13,7 @@ class Order extends Model
     protected $fillable = [
         'workspace_id', 'offer_id', 'customer_id', 'type', 'status',
         'amount', 'currency', 'mayar_checkout_url', 'mayar_transaction_id',
+        'midtrans_snap_token', 'midtrans_transaction_id',
         'metadata', 'paid_at',
     ];
 
