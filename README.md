@@ -1,37 +1,24 @@
-<div align="center">
+# RevenueForge
+> Multi-workspace SaaS platform for high-converting offer pages, Midtrans checkout pipelines, affiliate tracking, and real-time revenue analytics.
 
-# 💰 RevenueForge
+![Laravel 12](https://img.shields.io/badge/Laravel-12-FF2D20?style=flat-square&logo=laravel&logoColor=white)
+![Vue 3](https://img.shields.io/badge/Vue-3_+_Inertia.js-4FC08D?style=flat-square&logo=vuedotjs&logoColor=white)
+![Midtrans](https://img.shields.io/badge/Checkout-Midtrans-002855?style=flat-square)
+![Reverb](https://img.shields.io/badge/Realtime-Laravel_Reverb-F97316?style=flat-square)
 
-### Creator & SaaS Offer, Checkout, Affiliate & Revenue Analytics Platform
+### Core Modules
 
-[![Laravel](https://img.shields.io/badge/Laravel-12-FF2D20?style=for-the-badge&logo=laravel&logoColor=white)](https://laravel.com/)
-[![Vue](https://img.shields.io/badge/Vue-3%20%2B%20Inertia.js-4FC08D?style=for-the-badge&logo=vue.js&logoColor=white)](https://vuejs.org/)
-[![Payments](https://img.shields.io/badge/Checkout-Midtrans-002855?style=for-the-badge)](https://midtrans.com/)
-[![Realtime](https://img.shields.io/badge/WebSockets-Laravel%20Reverb-FF2D20?style=for-the-badge)](https://laravel.com/docs/reverb)
+| Module | Endpoints / Components | Highlights |
+| :--- | :--- | :--- |
+| **Offer Page Builder** | `/o/{slug}` | Drag-and-drop pricing tiers, testimonials & page duplication |
+| **Midtrans Pipeline** | `MidtransCheckoutController`, `MidtransWebhookController` | Production gateway + built-in sandbox demo & webhook logs |
+| **Affiliate & CRM** | Coupons, Referral Links, Email Broadcasts | Customer portal links & CSV export |
+| **Analytics** | ApexCharts + Pinia + Reverb | Conversion funnels, cash flow & live workspace notifications |
 
-*Multi-workspace SaaS platform for building high-converting offer landing pages, processing Midtrans payments, managing affiliates & coupons, and tracking cash flow and conversion analytics.*
-
-</div>
-
----
-
-## ✨ Key Features
-
-- **Drag-and-Drop Offer & Landing Page Builder** — Create, duplicate, publish, and customize offer pages with social proof testimonials and pricing tiers (`/o/{slug}`).
-- **Midtrans Checkout & Webhook Pipeline** — Production payment gateway integration (`MidtransCheckoutController`, `MidtransWebhookController`), plus a built-in sandbox demo checkout & webhook log viewer.
-- **CRM, Coupons & Affiliate System** — Customer portal links, CSV export, coupon management, affiliate link tracking, and email broadcasts.
-- **Real-Time Revenue Analytics** — ApexCharts dashboards, conversion metrics, billing controls, and workspace notifications backed by Pinia & Laravel Reverb.
-
----
-
-## 🚀 Local Setup
+### Local Quickstart
 
 ```bash
-composer install
-npm install
-cp .env.example .env
-php artisan key:generate
-php artisan migrate --seed
-npm run dev
-php artisan serve
+composer install && npm install && cp .env.example .env
+php artisan key:generate && php artisan migrate --seed
+php artisan serve & npm run dev
 ```
